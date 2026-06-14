@@ -1,0 +1,1025 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Argo — Del episodio a chapters.json en segundos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Argo convierte los capítulos de tu podcast en un chapters.json válido de Podcasting 2.0. Escríbelos a mano, importa un JSON o léelos de una captura con OCR. App nativa de macOS para podcasters." />
+<link rel="canonical" href="https://getargo.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Argo" />
+<meta property="og:url" content="https://getargo.app/" />
+<meta property="og:title" content="Argo — Del episodio a chapters.json en segundos" />
+<meta property="og:description" content="Escribe los capítulos a mano, importa un JSON o léelos de una captura con OCR. Argo exporta un chapters.json válido de Podcasting 2.0. App nativa de macOS." />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Argo — Del episodio a chapters.json en segundos" />
+<meta name="twitter:description" content="Escribe los capítulos a mano, importa un JSON o léelos de una captura con OCR. Argo exporta un chapters.json válido de Podcasting 2.0. App nativa de macOS." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --accent: #c0552f;
+    --accent-2: #a8431f;
+    --accent-weak: rgba(192, 85, 47, 0.10);
+    --accent-weak-2: rgba(192, 85, 47, 0.16);
+
+    --bg: #fbf8f4;
+    --bg-2: #f3ede4;
+    --card-bg: #ffffff;
+    --card-border: rgba(60, 42, 24, 0.10);
+    --card-border-strong: rgba(60, 42, 24, 0.16);
+    --hairline: rgba(60, 40, 20, 0.10);
+
+    --text: #2b251f;
+    --text-2: rgba(54, 44, 34, 0.64);
+    --text-3: rgba(54, 44, 34, 0.42);
+
+    --rail: #d8a48f;
+    --rail-dot: #c0552f;
+    --ok: #4f8a4f;
+
+    --json-bg: #f5efe7;
+    --json-key: #b04a26;
+    --json-str: #5f7a3a;
+    --json-num: #b07515;
+    --json-punc: rgba(54, 44, 34, 0.45);
+
+    --deep-1: #5e4131;
+    --deep-2: #3e2c20;
+
+    --nav-bg: rgba(251, 248, 244, 0.78);
+  }
+
+  html.dark {
+    --accent: #d2724f;
+    --accent-2: #e08a64;
+    --accent-weak: rgba(210, 114, 79, 0.14);
+    --accent-weak-2: rgba(210, 114, 79, 0.22);
+
+    --bg: #211c18;
+    --bg-2: #1a1511;
+    --card-bg: #2b2520;
+    --card-border: rgba(255, 222, 194, 0.09);
+    --card-border-strong: rgba(255, 222, 194, 0.16);
+    --hairline: rgba(255, 222, 194, 0.10);
+
+    --text: #f0e8df;
+    --text-2: rgba(240, 232, 223, 0.62);
+    --text-3: rgba(240, 232, 223, 0.40);
+
+    --rail: #6e4d3f;
+    --rail-dot: #d2724f;
+    --ok: #7bb47b;
+
+    --json-bg: #181310;
+    --json-key: #e08a64;
+    --json-str: #a9c47a;
+    --json-num: #e0a955;
+    --json-punc: rgba(240, 232, 223, 0.40);
+
+    --deep-1: #1c140f;
+    --deep-2: #120c08;
+
+    --nav-bg: rgba(33, 28, 24, 0.78);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  /* eyebrow */
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.10em; text-transform: uppercase; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .eyebrow::before { content: ""; width: 18px; height: 1.5px; background: var(--accent); display: inline-block; }
+
+  /* buttons */
+  .btn {
+    height: 46px; padding: 0 20px; border-radius: 9px; white-space: nowrap;
+    border: 0.5px solid var(--card-border-strong);
+    background: var(--card-bg); color: var(--text);
+    font-family: var(--sans); font-size: 15px; font-weight: 550;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 9px;
+    box-shadow: 0 1px 2px rgba(40,24,10,0.05);
+    transition: background .14s, border-color .14s, transform .14s;
+  }
+  .btn:hover { background: rgba(120,90,60,0.06); transform: translateY(-1px); }
+  .btn svg { width: 18px; height: 18px; }
+  .btn.primary {
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: #fff; border: 0.5px solid var(--accent-2);
+    box-shadow: 0 2px 10px rgba(140,40,10,0.26), inset 0 1px 0 rgba(255,255,255,0.22);
+    font-weight: 600;
+  }
+  .btn.primary:hover { filter: brightness(1.06); }
+  .btn.sm { height: 38px; font-size: 13.5px; padding: 0 16px; border-radius: 8px; }
+
+  /* ── App icon (the timestamp = the brand) ─────────────── */
+  .appicon {
+    border-radius: 24%;
+    background: radial-gradient(ellipse at 50% 18%, #c25a37 0%, #8a3520 72%, #6b2615 100%);
+    box-shadow: inset 0 1.5px 0 rgba(255,200,160,0.45), inset 0 -3px 6px rgba(0,0,0,0.35), 0 2px 5px rgba(0,0,0,0.22);
+    display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  }
+  .appicon span {
+    font-family: var(--mono); font-weight: 700; letter-spacing: -0.04em; color: #ffe0c4;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* ════════ NAV ════════ */
+  nav {
+    position: sticky; top: 0; z-index: 60;
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+    border-bottom: 0.5px solid transparent;
+    transition: border-color .2s;
+  }
+  nav.scrolled { border-bottom-color: var(--hairline); }
+  .nav-in { display: flex; align-items: center; gap: 14px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand .appicon { width: 30px; height: 30px; }
+  .brand .appicon span { font-size: 8px; }
+  .brand .bname { font-size: 17px; font-weight: 650; letter-spacing: -0.02em; }
+  .brand .bver { font-family: var(--mono); font-size: 11px; color: var(--text-3); margin-left: 1px; align-self: flex-end; padding-bottom: 3px; }
+  .nav-links { display: flex; align-items: center; gap: 4px; margin-left: 22px; }
+  .nav-links a {
+    font-size: 14px; color: var(--text-2); font-weight: 500;
+    padding: 7px 12px; border-radius: 7px; transition: background .12s, color .12s;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(120,90,60,0.08); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 8px; border: 0.5px solid var(--card-border);
+    background: var(--card-bg); color: var(--text-2); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; transition: background .12s, color .12s;
+  }
+  .icon-btn:hover { background: rgba(120,90,60,0.08); color: var(--text); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .lang-btn { width: auto; padding: 0 11px; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+
+  /* download counter */
+  .dlcount { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .dlcount svg { width: 14px; height: 14px; opacity: 0.7; }
+  .dlcount b { color: var(--text-2); font-weight: 600; }
+
+  /* ════════ HERO ════════ */
+  .hero { position: relative; padding: 78px 0 60px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(620px 360px at 14% -8%, var(--accent-weak) 0%, transparent 60%),
+      radial-gradient(520px 420px at 96% 4%, rgba(192,85,47,0.06) 0%, transparent 55%);
+  }
+  .hero-in { position: relative; z-index: 1; text-align: center; }
+  h1 {
+    margin: 22px 0 0; font-size: clamp(38px, 6vw, 68px); line-height: 1.02;
+    font-weight: 680; letter-spacing: -0.035em; text-wrap: balance;
+  }
+  h1 .tc {
+    font-family: var(--mono); font-weight: 600; color: var(--accent);
+    font-feature-settings: "tnum" 1; letter-spacing: -0.04em;
+  }
+  .hero-sub {
+    margin: 22px auto 0; max-width: 620px; font-size: clamp(16px, 2vw, 19px);
+    color: var(--text-2); text-wrap: pretty;
+  }
+  .hero-sub b { color: var(--text); font-weight: 600; }
+  .hero-cta { margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-micro {
+    margin-top: 16px; font-family: var(--mono); font-size: 12.5px; color: var(--text-3);
+    display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;
+  }
+  .hero-micro .sep { opacity: 0.5; }
+
+  /* ── Hero window mockup ──────────────────────────────── */
+  .stage { position: relative; margin-top: 56px; }
+  .stage::after {
+    content: ""; position: absolute; left: 50%; bottom: -40px; transform: translateX(-50%);
+    width: 78%; height: 80px; background: rgba(80,40,16,0.18); filter: blur(46px); z-index: 0; border-radius: 50%;
+  }
+  .window {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1000px; margin: 0 auto;
+    background: var(--bg); border-radius: 13px; overflow: hidden;
+    box-shadow: 0 0 0 0.5px rgba(0,0,0,0.18), 0 44px 90px rgba(60,30,12,0.30), 0 14px 34px rgba(60,30,12,0.20);
+    text-align: left;
+  }
+  .w-toolbar {
+    height: 52px; display: flex; align-items: center; gap: 13px; padding: 0 16px;
+    background: var(--bg-2); border-bottom: 0.5px solid var(--hairline);
+  }
+  .traffic { display: flex; gap: 8px; }
+  .light { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
+  .light.r { background: #ec6a5e; } .light.y { background: #f4be4f; } .light.g { background: #61c554; }
+  .w-toolbar .appicon { width: 22px; height: 22px; margin-left: 4px; }
+  .w-toolbar .appicon span { font-size: 6px; }
+  .w-title { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .w-title .t { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .w-title .t .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .w-title .s { font-family: var(--mono); font-size: 10.5px; color: var(--text-3); }
+  .w-pill {
+    margin-left: 6px; height: 28px; padding: 0 10px; border-radius: 8px;
+    border: 0.5px solid var(--hairline); background: rgba(120,90,60,0.06);
+    display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 550;
+  }
+  .w-pill .pdot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  .w-tb-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .w-chip-json {
+    font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent);
+    background: var(--accent-weak); padding: 5px 10px; border-radius: 7px;
+  }
+  .w-body { display: flex; min-height: 0; }
+  .w-list { flex: 1 1 auto; min-width: 0; padding: 16px 18px 20px; }
+  .w-list .ep-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); font-weight: 600; }
+  .w-list .ep-name { font-size: 21px; font-weight: 640; letter-spacing: -0.02em; margin-top: 4px; }
+  .w-list .ep-hint { font-size: 11px; color: var(--text-3); margin-top: 5px; }
+  .w-list .ep-hint .m { font-family: var(--mono); color: var(--text-2); }
+  .w-list .list-head { display: flex; align-items: baseline; gap: 9px; margin: 18px 0 10px; }
+  .w-list .list-head .h { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); }
+  .w-list .list-head .c { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+
+  .chapter { display: grid; grid-template-columns: 30px 1fr; }
+  .rail { position: relative; display: flex; justify-content: center; }
+  .rail .line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--rail); opacity: 0.45; }
+  .chapter:first-child .rail .line { top: 22px; }
+  .chapter:last-child .rail .line { bottom: calc(100% - 22px); }
+  .rail .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2.5px solid var(--rail-dot); margin-top: 17px; z-index: 2; box-shadow: 0 0 0 4px var(--bg); }
+  .ccard {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 11px 13px; margin-bottom: 9px; box-shadow: 0 1px 2px rgba(40,24,10,0.04);
+  }
+  .ccard.editing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak), 0 4px 14px rgba(192,85,47,0.10); }
+  .ccard-top { display: flex; align-items: center; gap: 13px; }
+  .timecode { font-family: var(--mono); font-size: 21px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum" 1; line-height: 1; flex: 0 0 auto; }
+  .timecode .dim { color: var(--text-3); }
+  .ccard.editing .timecode { background: var(--accent-weak); color: var(--accent); padding: 3px 5px; border-radius: 5px; box-shadow: inset 0 0 0 1.5px var(--accent-weak-2); }
+  .ccard.editing .timecode .dim { color: var(--accent); opacity: 0.5; }
+  .ctitle { font-size: 14.5px; font-weight: 550; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chips { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; height: 23px; padding: 0 9px 0 7px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .chip svg { width: 12px; height: 12px; }
+  .chip .v { font-family: var(--mono); font-size: 10.5px; }
+  .chip.filled { background: var(--accent-weak); color: var(--accent); }
+  .chip.filled.img { background: rgba(95,122,58,0.13); color: var(--json-str); }
+  .chip.ghost { background: transparent; color: var(--text-3); border: 1px dashed var(--card-border-strong); }
+  .chip.ghost.type { border-style: solid; }
+  .caret { display: inline-block; width: 2px; height: 18px; background: var(--accent); margin-left: 1px; vertical-align: -3px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .w-json { flex: 0 0 312px; background: var(--json-bg); border-left: 0.5px solid var(--hairline); display: flex; flex-direction: column; }
+  .w-json .jh { display: flex; align-items: center; gap: 8px; padding: 13px 15px; border-bottom: 0.5px solid var(--hairline); }
+  .w-json .jh .jt { font-family: var(--mono); font-size: 11px; color: var(--text-2); }
+  .w-json .jh .jb { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-weak); padding: 2px 7px; border-radius: 5px; }
+  .w-json .jbody { padding: 14px 15px; font-family: var(--mono); font-size: 11px; line-height: 1.7; white-space: pre; overflow: hidden; }
+  .jk { color: var(--json-key); } .js { color: var(--json-str); } .jn { color: var(--json-num); } .jp { color: var(--json-punc); }
+
+  /* ════════ Compat strip ════════ */
+  .strip { padding: 30px 0 6px; }
+  .strip .lbl { text-align: center; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+  .strip .row { margin-top: 16px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .pchip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 22px; border: 0.5px solid var(--card-border); background: var(--card-bg); font-size: 13.5px; font-weight: 550; color: var(--text-2); }
+  .pchip .b { width: 9px; height: 9px; border-radius: 3px; }
+
+  /* ════════ Section scaffolding ════════ */
+  section.band { padding: 92px 0; }
+  .sec-head { max-width: 660px; }
+  .sec-head.center { margin: 0 auto; text-align: center; }
+  .sec-head h2 { margin: 16px 0 0; font-size: clamp(28px, 4vw, 42px); font-weight: 660; letter-spacing: -0.03em; line-height: 1.08; text-wrap: balance; }
+  .sec-head p { margin: 16px 0 0; font-size: 17px; color: var(--text-2); text-wrap: pretty; }
+
+  /* ── Cómo funciona ── */
+  .steps { margin-top: 52px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; position: relative; }
+  .steprail { position: absolute; top: 27px; left: 12%; right: 12%; height: 2px; background: var(--rail); opacity: 0.4; z-index: 0; }
+  .step { position: relative; z-index: 1; }
+  .step .num {
+    width: 54px; height: 54px; border-radius: 16px; background: var(--card-bg);
+    border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
+    color: var(--accent); box-shadow: 0 2px 8px rgba(40,24,10,0.06);
+  }
+  .step .num svg { width: 26px; height: 26px; }
+  .step .k { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 20px; }
+  .step h3 { margin: 7px 0 0; font-size: 19px; font-weight: 620; letter-spacing: -0.02em; }
+  .step p { margin: 9px 0 0; font-size: 14.5px; color: var(--text-2); line-height: 1.55; }
+
+  /* ── Features grid ── */
+  .features { margin-top: 52px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .feat {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px;
+    padding: 22px; transition: border-color .14s, box-shadow .14s, transform .14s;
+  }
+  .feat:hover { border-color: var(--card-border-strong); box-shadow: 0 6px 20px rgba(40,24,10,0.07); transform: translateY(-2px); }
+  .feat .ic { width: 40px; height: 40px; border-radius: 11px; background: var(--accent-weak); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+  .feat .ic svg { width: 21px; height: 21px; }
+  .feat h3 { margin: 16px 0 0; font-size: 16.5px; font-weight: 620; letter-spacing: -0.01em; }
+  .feat p { margin: 8px 0 0; font-size: 14px; color: var(--text-2); line-height: 1.55; }
+  .feat.wide { grid-column: span 2; }
+
+  /* ── Dark OCR band ── */
+  .ocr-band { background: linear-gradient(155deg, var(--deep-1) 0%, var(--deep-2) 100%); color: #f3e6da; position: relative; overflow: hidden; }
+  .ocr-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 80% 0%, rgba(192,85,47,0.22) 0%, transparent 55%); }
+  .ocr-grid { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; margin-top: 48px; }
+  .ocr-band .eyebrow { color: #e8a47e; }
+  .ocr-band .eyebrow::before { background: #e8a47e; }
+  .ocr-band h2 { color: #fbf1e8; }
+  .ocr-band .sec-head p { color: rgba(243,230,218,0.72); }
+  .shot {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,220,190,0.14); border-radius: 12px;
+    padding: 16px; box-shadow: 0 18px 40px rgba(0,0,0,0.30);
+  }
+  .shot .cap { font-family: var(--mono); font-size: 10.5px; color: rgba(243,230,218,0.5); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px; }
+  .shot.screenshot { background: repeating-linear-gradient(135deg, rgba(255,255,255,0.045) 0 11px, rgba(255,255,255,0.02) 11px 22px), rgba(0,0,0,0.18); }
+  .ocr-line { display: flex; gap: 12px; align-items: baseline; padding: 7px 4px; border-bottom: 1px dashed rgba(255,220,190,0.12); font-family: var(--mono); font-size: 13px; }
+  .ocr-line:last-child { border-bottom: 0; }
+  .ocr-line .t { color: #e8a47e; font-weight: 600; }
+  .ocr-line .x { color: rgba(243,230,218,0.82); font-family: var(--sans); font-size: 13.5px; }
+  .recog .ocr-line { border-bottom-style: solid; border-bottom-color: rgba(255,220,190,0.1); }
+  .recog .ocr-line .badge { margin-left: auto; color: #9fc36e; }
+  .recog .ocr-line .badge svg { width: 14px; height: 14px; }
+  .ocr-arrow { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #e8a47e; }
+  .ocr-arrow svg { width: 30px; height: 30px; }
+  .ocr-arrow span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(243,230,218,0.55); }
+
+  /* ── Podcasting 2.0 / JSON ── */
+  .p20 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 12px; }
+  .p20-list { margin: 26px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .p20-list li { display: flex; gap: 12px; font-size: 15px; color: var(--text-2); }
+  .p20-list li svg { width: 20px; height: 20px; color: var(--ok); flex: 0 0 auto; margin-top: 1px; }
+  .p20-list li b { color: var(--text); font-weight: 600; }
+  .codecard { background: var(--json-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; box-shadow: 0 14px 36px rgba(40,24,10,0.10); }
+  .codecard .ch { display: flex; align-items: center; gap: 8px; padding: 13px 16px; border-bottom: 0.5px solid var(--hairline); }
+  .codecard .ch .d { width: 9px; height: 9px; border-radius: 50%; }
+  .codecard .ch .ft { font-family: var(--mono); font-size: 11.5px; color: var(--text-2); margin-left: 4px; }
+  .codecard .ch .vb { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-weak); padding: 2px 8px; border-radius: 5px; }
+  .codecard pre { margin: 0; padding: 18px 18px; font-family: var(--mono); font-size: 12.5px; line-height: 1.75; white-space: pre; overflow-x: auto; }
+
+  /* ── Pricing ── */
+  .price-wrap { margin-top: 48px; display: flex; justify-content: center; }
+  .price {
+    width: 100%; max-width: 420px; background: var(--card-bg); border: 1px solid var(--card-border-strong);
+    border-radius: 18px; padding: 32px 30px; text-align: center; position: relative;
+    box-shadow: 0 18px 44px rgba(40,24,10,0.10);
+  }
+  .price .tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .price .amt { font-size: 52px; font-weight: 680; letter-spacing: -0.03em; margin-top: 12px; }
+  .price .amt small { font-size: 16px; font-weight: 500; color: var(--text-3); }
+  .price .note { font-size: 13.5px; color: var(--text-2); margin-top: 4px; }
+  .price ul { list-style: none; margin: 24px 0; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 11px; }
+  .price ul li { display: flex; gap: 10px; font-size: 14.5px; color: var(--text-2); }
+  .price ul li svg { width: 18px; height: 18px; color: var(--ok); flex: 0 0 auto; margin-top: 1px; }
+  .price .btn { width: 100%; justify-content: center; }
+  .price .sub { margin-top: 13px; font-family: var(--mono); font-size: 11.5px; color: var(--text-3); }
+
+  /* ── FAQ ── */
+  .faq { margin-top: 44px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  details {
+    border-bottom: 1px solid var(--hairline); padding: 4px 4px;
+  }
+  details summary {
+    list-style: none; cursor: pointer; padding: 20px 4px; font-size: 17px; font-weight: 580;
+    letter-spacing: -0.01em; display: flex; align-items: center; gap: 14px;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary .pl { margin-left: auto; flex: 0 0 auto; width: 20px; height: 20px; position: relative; transition: transform .2s; color: var(--accent); }
+  details summary .pl::before, details summary .pl::after { content: ""; position: absolute; background: currentColor; border-radius: 2px; }
+  details summary .pl::before { left: 9px; top: 2px; width: 2px; height: 16px; }
+  details summary .pl::after { top: 9px; left: 2px; height: 2px; width: 16px; }
+  details[open] summary .pl { transform: rotate(135deg); }
+  details .ans { padding: 0 4px 22px; font-size: 15px; color: var(--text-2); line-height: 1.6; max-width: 640px; }
+  details .ans .m { font-family: var(--mono); color: var(--text); font-size: 13.5px; }
+
+  /* ── CTA closer ── */
+  .closer { text-align: center; }
+  .closer .appicon { width: 76px; height: 76px; margin: 0 auto 26px; }
+  .closer .appicon span { font-size: 19px; }
+  .closer h2 { font-size: clamp(30px, 4.5vw, 46px); font-weight: 680; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+  .closer p { font-size: 17px; color: var(--text-2); margin: 16px auto 0; max-width: 520px; }
+  .closer .hero-cta { margin-top: 30px; }
+
+  /* ── Footer ── */
+  footer { background: var(--bg-2); border-top: 0.5px solid var(--hairline); padding: 52px 0 40px; }
+  .foot { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  .foot .brand .appicon { width: 34px; height: 34px; }
+  .foot-tag { font-size: 13.5px; color: var(--text-2); margin-top: 14px; max-width: 280px; line-height: 1.55; }
+  .foot-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .foot-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin: 0 0 14px; font-weight: 600; }
+  .foot-col a { display: block; font-size: 14px; color: var(--text-2); padding: 5px 0; transition: color .12s; }
+  .foot-col a:hover { color: var(--accent); }
+  .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 0.5px solid var(--hairline); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; font-family: var(--mono); font-size: 11.5px; color: var(--text-3); }
+
+  /* ── Reveal on scroll ── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .w-json { display: none; }
+    .steps, .features { grid-template-columns: 1fr; }
+    .steprail { display: none; }
+    .feat.wide { grid-column: span 1; }
+    .p20 { grid-template-columns: 1fr; gap: 32px; }
+    .ocr-grid { grid-template-columns: 1fr; }
+    .ocr-arrow { flex-direction: row; }
+    .ocr-arrow svg { transform: rotate(90deg); }
+    section.band { padding: 64px 0; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .hero { padding: 48px 0 40px; }
+    .foot-cols { gap: 36px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ════════════════ NAV ════════════════ -->
+  <nav id="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="#top">
+        <span class="appicon"><span>01:23</span></span>
+        <span class="bname">Argo</span>
+        <span class="bver">v1.0</span>
+      </a>
+      <div class="nav-links">
+        <a href="#como" data-i18n="nav_how">Cómo funciona</a>
+        <a href="#features" data-i18n="nav_feat">Características</a>
+        <a href="#formato" data-i18n="nav_p20">Podcasting 2.0</a>
+        <a href="#precio" data-i18n="nav_price">Precio</a>
+      </div>
+      <div class="nav-right">
+        <button class="icon-btn lang-btn" id="langToggle" title="Language" aria-label="Cambiar idioma"><span id="langLabel">EN</span></button>
+        <button class="icon-btn" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+        <a class="btn primary sm" href="#precio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <span data-i18n="nav_dl">Descargar</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <span id="top"></span>
+
+  <!-- ════════════════ HERO ════════════════ -->
+  <header class="hero">
+    <div class="wrap hero-in">
+      <span class="eyebrow" data-i18n="hero_eyebrow">App para macOS · Podcasting 2.0</span>
+      <h1 data-i18n="hero_h1">Del episodio a <span class="tc">chapters.json</span><br />en segundos.</h1>
+      <p class="hero-sub" data-i18n="hero_sub"><b>Escríbelos a mano</b>, <b>importa un JSON</b> que ya tengas o deja que el <b>OCR</b> lea una captura. Argo los convierte en capítulos editables y exporta un JSON válido.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#precio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <span data-i18n="hero_dl">Descargar para macOS</span>
+        </a>
+        <a class="btn" href="#como">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>
+          <span data-i18n="hero_see">Ver cómo funciona</span>
+        </a>
+      </div>
+      <div class="hero-micro" data-i18n="hero_micro">
+        <span>Gratis</span><span class="sep">·</span><span>macOS 13+</span><span class="sep">·</span><span>Apple Silicon &amp; Intel</span><span class="sep">·</span><span>Todo local</span>
+      </div>
+
+      <!-- App window mockup -->
+      <div class="stage reveal">
+        <div class="window">
+          <div class="w-toolbar">
+            <div class="traffic"><span class="light r"></span><span class="light y"></span><span class="light g"></span></div>
+            <span class="appicon"><span>01:23</span></span>
+            <div class="w-title"><span class="t"><span class="dot"></span>WKL367</span><span class="s">chapters · v1.0</span></div>
+            <span class="w-pill"><span class="pdot"></span>Weekly
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+            <div class="w-tb-right"><span class="w-chip-json">{ } JSON</span></div>
+          </div>
+          <div class="w-body">
+            <div class="w-list">
+              <div class="ep-eyebrow" data-i18n="mock_ep">Episodio</div>
+              <div class="ep-name">WKL367</div>
+              <div class="ep-hint" data-i18n="mock_ephint">Se usará para nombrar las imágenes al subirlas · <span class="m">WKL367-2.jpeg</span></div>
+              <div class="list-head"><span class="h" data-i18n="mock_chlabel">Capítulos</span><span class="c" data-i18n="mock_chcount">5 · 50:27 marcados</span></div>
+
+              <div class="chapter">
+                <div class="rail"><span class="line"></span><span class="dot"></span></div>
+                <div class="ccard">
+                  <div class="ccard-top"><span class="timecode">00:<span class="dim">00:00</span></span><span class="ctitle">Presentación</span></div>
+                  <div class="chips"><span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span><span class="chip ghost" data-i18n="chip_img">Imagen</span></div>
+                </div>
+              </div>
+
+              <div class="chapter">
+                <div class="rail"><span class="line"></span><span class="dot"></span></div>
+                <div class="ccard editing">
+                  <div class="ccard-top"><span class="timecode">00:00:21</span><span class="ctitle">Mi Steam Deck<span class="caret"></span></span></div>
+                  <div class="chips">
+                    <span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span>
+                    <span class="chip filled img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><span class="v">WKL367-1.jpeg</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="chapter">
+                <div class="rail"><span class="line"></span><span class="dot"></span></div>
+                <div class="ccard">
+                  <div class="ccard-top"><span class="timecode">00:18:35</span><span class="ctitle">Apple Store Covent Garden</span></div>
+                  <div class="chips"><span class="chip filled img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><span class="v">WKL367-2.jpeg</span></span><span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-json">
+              <div class="jh"><span class="jt">chapters.json</span><span class="jb">Podcasting 2.0</span></div>
+              <div class="jbody"><span class="jp">{</span>
+  <span class="jk">"version"</span><span class="jp">:</span> <span class="js">"1.0"</span><span class="jp">,</span>
+  <span class="jk">"chapters"</span><span class="jp">:</span> <span class="jp">[</span>
+    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">0</span><span class="jp">,</span> <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Presentación"</span> <span class="jp">},</span>
+    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">21</span><span class="jp">,</span>
+      <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Mi Steam Deck"</span><span class="jp">,</span>
+      <span class="jk">"img"</span><span class="jp">:</span> <span class="js">"…/WKL367-1.jpeg"</span> <span class="jp">},</span>
+    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">1115</span><span class="jp">,</span> <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Apple Store Covent…"</span> <span class="jp">}</span>
+  <span class="jp">]</span>
+<span class="jp">}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════ Compat strip ════════════════ -->
+  <div class="wrap strip reveal">
+    <div class="lbl" data-i18n="strip_lbl">El JSON funciona en cualquier reproductor Podcasting 2.0</div>
+    <div class="row">
+      <span class="pchip"><span class="b" style="background:#e08a2f"></span>Castamatic</span>
+      <span class="pchip"><span class="b" style="background:#2d6cdf"></span>Podcast Addict</span>
+      <span class="pchip"><span class="b" style="background:#f43e37"></span>Pocket Casts</span>
+      <span class="pchip"><span class="b" style="background:#9b4dd6"></span>Apple Podcasts</span>
+      <span class="pchip"><span class="b" style="background:#1fa67a"></span>PulsarCast</span>
+    </div>
+  </div>
+
+  <!-- ════════════════ Cómo funciona ════════════════ -->
+  <section class="band" id="como">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow" data-i18n="how_eyebrow">Cómo funciona</span>
+        <h2 data-i18n="how_h2">Tres pasos, del primer capítulo al JSON.</h2>
+        <p data-i18n="how_p">Trae los capítulos como quieras —a mano, importando un JSON o con una captura— y Argo se encarga de montar el formato.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="steprail"></div>
+        <div class="step">
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V6a2 2 0 0 1 2-2h2"/><path d="M17 4h2a2 2 0 0 1 2 2v2"/><path d="M21 16v2a2 2 0 0 1-2 2h-2"/><path d="M7 20H5a2 2 0 0 1-2-2v-2"/><path d="M7 10.5h6"/><path d="M7 13.5h10"/></svg></div>
+          <div class="k">01</div>
+          <h3 data-i18n="step1_h">Trae tus capítulos</h3>
+          <p data-i18n="step1_p">Escríbelos a mano, importa un <span style="font-family:var(--mono);font-size:13px">chapters.json</span> que ya tengas o arrastra una captura y deja que el OCR la lea.</p>
+        </div>
+        <div class="step">
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></div>
+          <div class="k">02</div>
+          <h3 data-i18n="step2_h">Revisa y edita</h3>
+          <p data-i18n="step2_p">Cada capítulo es una tarjeta editable: ajusta el timecode y el título, reordénalos y añade enlaces o imágenes donde quieras.</p>
+        </div>
+        <div class="step">
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/></svg></div>
+          <div class="k">03</div>
+          <h3 data-i18n="step3_h">Exporta el JSON</h3>
+          <p data-i18n="step3_p">Un <span style="font-family:var(--mono);font-size:13px">chapters.json</span> limpio y validado para Podcasting 2.0. Descárgalo o súbelo por FTP a tu hosting sin salir de la app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Features ════════════════ -->
+  <section class="band" id="features" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="feat_eyebrow">Características</span>
+        <h2 data-i18n="feat_h2">El timecode es el protagonista.</h2>
+        <p data-i18n="feat_p">Todo gira en torno al tiempo. Sin micrófonos de adorno, sin formularios infinitos: una herramienta afilada para una sola cosa.</p>
+      </div>
+      <div class="features reveal">
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></div>
+          <h3 data-i18n="f1_h">OCR de capturas</h3>
+          <p data-i18n="f1_p">Detecta timestamps y títulos de cualquier imagen y los convierte en capítulos en un par de segundos.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></div>
+          <h3 data-i18n="f2_h">Tarjetas editables</h3>
+          <p data-i18n="f2_p">El timecode, grande y tabular, manda. Edita títulos, añade enlaces e imágenes por capítulo desde chips claros.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/></svg></div>
+          <h3 data-i18n="f3_h">Vista previa en vivo</h3>
+          <p data-i18n="f3_p">Ve el <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span> construirse mientras editas. Lo que ves es exactamente lo que exportas.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg></div>
+          <h3 data-i18n="f4_h">Varios podcasts, un destino cada uno</h3>
+          <p data-i18n="f4_p">Guarda los datos de cada programa y sube por FTP o SFTP al sitio correcto. Las contraseñas viven en el Llavero, no en la app.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <h3 data-i18n="f5_h">Imágenes por capítulo</h3>
+          <p data-i18n="f5_p">Arrastra una portada y Argo la renombra con el slug del episodio y la sube por ti. La ruta acaba en el campo <span style="font-family:var(--mono);font-size:12.5px">img</span> del JSON.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+          <h3 data-i18n="f6_h">Nativa, clara y oscura</h3>
+          <p data-i18n="f6_p">Hecha en SwiftUI. Se siente como parte de macOS y sigue el modo claro u oscuro de tu sistema sin que tengas que tocar nada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ OCR band ════════════════ -->
+  <section class="band ocr-band">
+    <div class="wrap">
+      <div class="sec-head reveal" style="max-width:560px">
+        <span class="eyebrow" data-i18n="ocr_eyebrow">El atajo</span>
+        <h2 data-i18n="ocr_h2">Una captura entra. Capítulos salen.</h2>
+        <p data-i18n="ocr_p">¿Ya tienes los capítulos escritos en una imagen? Sáltate el tecleo. El reconocimiento corre entero en tu Mac: nada se sube a la nube y tus notas son tuyas.</p>
+      </div>
+      <div class="ocr-grid reveal">
+        <div class="shot screenshot">
+          <div class="cap" data-i18n="ocr_cap1">captura · notas del episodio</div>
+          <div class="ocr-line"><span class="t">0:00</span><span class="x">Presentación</span></div>
+          <div class="ocr-line"><span class="t">0:21</span><span class="x">Mi Steam Deck</span></div>
+          <div class="ocr-line"><span class="t">18:35</span><span class="x">Apple Store Covent Garden</span></div>
+          <div class="ocr-line"><span class="t">36:05</span><span class="x">SIM en el Palma 2 Pro</span></div>
+          <div class="ocr-line"><span class="t">50:27</span><span class="x">Despedida</span></div>
+        </div>
+        <div class="ocr-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          <span>OCR</span>
+        </div>
+        <div class="shot recog">
+          <div class="cap" data-i18n="ocr_cap2">reconocido · 5 capítulos</div>
+          <div class="ocr-line"><span class="t">00:00:00</span><span class="x">Presentación</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="ocr-line"><span class="t">00:00:21</span><span class="x">Mi Steam Deck</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="ocr-line"><span class="t">00:18:35</span><span class="x">Apple Store Covent Garden</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="ocr-line"><span class="t">00:36:05</span><span class="x">SIM en el Palma 2 Pro</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="ocr-line"><span class="t">00:50:27</span><span class="x">Despedida</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Podcasting 2.0 / JSON ════════════════ -->
+  <section class="band" id="formato">
+    <div class="wrap p20">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="p20_eyebrow">El formato</span>
+        <h2 data-i18n="p20_h2" style="margin:16px 0 0;font-size:clamp(28px,4vw,42px);font-weight:660;letter-spacing:-0.03em;line-height:1.08">Un estándar abierto, no un formato propietario.</h2>
+        <ul class="p20-list">
+          <li data-i18n="p20_l1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Especificación Podcasting 2.0.</b> El mismo <span style="font-family:var(--mono);font-size:13px">chapters.json</span> que entienden los reproductores modernos.</span></li>
+          <li data-i18n="p20_l2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Enlaces e imágenes por capítulo.</b> Campos <span style="font-family:var(--mono);font-size:13px">url</span> e <span style="font-family:var(--mono);font-size:13px">img</span> opcionales, listos cuando los necesites.</span></li>
+          <li data-i18n="p20_l3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Validado al exportar.</b> Si algo no cuadra, Argo te avisa antes de subirlo.</span></li>
+          <li data-i18n="p20_l4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Importa lo que ya tienes.</b> ¿Un JSON anterior? Ábrelo y sigue editando desde donde lo dejaste.</span></li>
+        </ul>
+      </div>
+      <div class="codecard reveal">
+        <div class="ch"><span class="d" style="background:#ec6a5e"></span><span class="d" style="background:#f4be4f"></span><span class="d" style="background:#61c554"></span><span class="ft">wkl367.json</span><span class="vb">v1.0</span></div>
+        <pre><span class="jp">{</span>
+  <span class="jk">"version"</span><span class="jp">:</span> <span class="js">"1.0"</span><span class="jp">,</span>
+  <span class="jk">"chapters"</span><span class="jp">:</span> <span class="jp">[</span>
+    <span class="jp">{</span>
+      <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">21</span><span class="jp">,</span>
+      <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Mi Steam Deck"</span><span class="jp">,</span>
+      <span class="jk">"img"</span><span class="jp">:</span> <span class="js">"https://emilcarfm.b-cdn.net/T9/WKL367-1.jpeg"</span>
+    <span class="jp">},</span>
+    <span class="jp">{</span>
+      <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">1115</span><span class="jp">,</span>
+      <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Apple Store Covent Garden"</span><span class="jp">,</span>
+      <span class="jk">"img"</span><span class="jp">:</span> <span class="js">"https://emilcarfm.b-cdn.net/T9/WKL367-2.jpeg"</span>
+    <span class="jp">}</span>
+  <span class="jp">]</span>
+<span class="jp">}</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Precio ════════════════ -->
+  <section class="band" id="precio" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow" data-i18n="price_eyebrow">Precio</span>
+        <h2 data-i18n="price_h2">Gratis. Sin cuenta, sin nube.</h2>
+        <p data-i18n="price_p">Argo es una herramienta de un solo propósito hecha por y para podcasters. Descárgala y úsala.</p>
+      </div>
+      <div class="price-wrap reveal">
+        <div class="price">
+          <div class="tag" data-i18n="price_tag">Argo para macOS</div>
+          <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.0</small></div>
+          <div class="note" data-i18n="price_note">Descarga directa · sin App Store, sin telemetría</div>
+          <ul>
+            <li data-i18n="price_li1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>OCR de capturas ilimitado</li>
+            <li data-i18n="price_li2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Exportación e importación de JSON</li>
+            <li data-i18n="price_li3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subida por FTP / SFTP integrada</li>
+            <li data-i18n="price_li4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Modo claro y oscuro nativo</li>
+          </ul>
+          <a class="btn primary" href="https://github.com/emilcar74/ChapterEditor/releases/latest/download/Argo.dmg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            Descargar Argo.dmg
+          </a>
+          <div class="dlcount" id="dlcount" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span id="dlcountText"></span></div>
+          <div class="sub" data-i18n="price_sub">requiere macOS 13 Ventura o posterior</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ FAQ ════════════════ -->
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow" data-i18n="faq_eyebrow">Preguntas</span>
+        <h2 data-i18n="faq_h2">Lo que sueles querer saber.</h2>
+      </div>
+      <div class="faq reveal">
+        <details open>
+          <summary data-i18n="faq_q1">¿Necesito conexión a internet?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a1">No para lo importante. El OCR corre entero en tu Mac y la edición es local. Solo necesitas red si decides <b>subir</b> las imágenes o el JSON por FTP a tu hosting.</div>
+        </details>
+        <details>
+          <summary data-i18n="faq_q2">¿Qué formatos de imagen acepta?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a2">PNG y JPG, incluidas capturas de pantalla. Da igual de dónde venga la imagen: notas del episodio, tu editor de audio o un documento.</div>
+        </details>
+        <details>
+          <summary data-i18n="faq_q3">¿Con qué reproductores funciona el resultado?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a3">Argo genera un <span class="m">chapters.json</span> estándar de Podcasting 2.0, así que funciona con cualquier reproductor que soporte capítulos: Castamatic, Podcast Addict, Pocket Casts, Apple Podcasts y más.</div>
+        </details>
+        <details>
+          <summary data-i18n="faq_q4">¿Puedo subir directamente a mi hosting?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a4">Sí. Guarda los datos de conexión de cada podcast y sube el JSON y las imágenes por <span class="m">FTP</span> o <span class="m">SFTP</span> sin salir de la app. Las contraseñas se guardan en el Llavero de macOS.</div>
+        </details>
+        <details>
+          <summary data-i18n="faq_q5">¿Mis datos salen de mi Mac?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a5">No. No hay cuenta, ni nube de procesamiento, ni telemetría. Lo único que sale es lo que tú decides subir a tu propio servidor.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Closer CTA ════════════════ -->
+  <section class="band" style="background:var(--bg-2);padding-bottom:96px">
+    <div class="wrap closer reveal">
+      <span class="appicon"><span>01:23</span></span>
+      <h2 data-i18n="closer_h2">Tus capítulos, listos antes de que abras el editor.</h2>
+      <p data-i18n="closer_p">Descarga Argo y convierte tu próximo episodio en un <span style="font-family:var(--mono);font-size:15px">chapters.json</span> en lo que tarda en cargar la página.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#precio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <span data-i18n="hero_dl">Descargar para macOS</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Footer ════════════════ -->
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="#top">
+            <span class="appicon"><span>01:23</span></span>
+            <span class="bname">Argo</span>
+          </a>
+          <p class="foot-tag" data-i18n="foot_tag">Del episodio a <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. Una herramienta afilada para podcasters, hecha para macOS.</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h4 data-i18n="foot_product">Producto</h4>
+            <a href="#como" data-i18n="nav_how">Cómo funciona</a>
+            <a href="#features" data-i18n="nav_feat">Características</a>
+            <a href="#formato" data-i18n="nav_p20">Podcasting 2.0</a>
+            <a href="#precio" data-i18n="foot_dl">Descargar</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span data-i18n="foot_copy">© 2026 Argo · v1.0</span>
+        <span data-i18n="foot_made">Hecho con amor para la comunidad podcastera</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ════════ i18n (ES default, EN fallback) ════════
+    const I18N = {
+      nav_how: "How it works",
+      nav_feat: "Features",
+      nav_p20: "Podcasting 2.0",
+      nav_price: "Pricing",
+      nav_dl: "Download",
+      hero_eyebrow: "macOS app · Podcasting 2.0",
+      hero_h1: 'From episode to <span class="tc">chapters.json</span><br />in seconds.',
+      hero_sub: '<b>Type them by hand</b>, <b>import a JSON</b> you already have, or let <b>OCR</b> read a screenshot. Argo turns them into editable chapters and exports a valid JSON.',
+      hero_dl: "Download for macOS",
+      hero_see: "See how it works",
+      hero_micro: '<span>Free</span><span class="sep">·</span><span>macOS 13+</span><span class="sep">·</span><span>Apple Silicon &amp; Intel</span><span class="sep">·</span><span>Fully local</span>',
+      mock_ep: "Episode",
+      mock_ephint: 'Used to name images when uploading · <span class="m">WKL367-2.jpeg</span>',
+      mock_chlabel: "Chapters",
+      mock_chcount: "5 · 50:27 marked",
+      chip_link: "Add link",
+      chip_img: "Image",
+      strip_lbl: "The JSON works in any Podcasting 2.0 player",
+      how_eyebrow: "How it works",
+      how_h2: "Three steps, from the first chapter to JSON.",
+      how_p: "Bring your chapters however you like —by hand, importing a JSON, or from a screenshot— and Argo assembles the format.",
+      step1_h: "Bring your chapters",
+      step1_p: 'Type them by hand, import a <span style="font-family:var(--mono);font-size:13px">chapters.json</span> you already have, or drag in a screenshot and let OCR read it.',
+      step2_h: "Review and edit",
+      step2_p: "Each chapter is an editable card: tweak the timecode and title, reorder them, and add links or images wherever you want.",
+      step3_h: "Export the JSON",
+      step3_p: 'A clean, validated <span style="font-family:var(--mono);font-size:13px">chapters.json</span> for Podcasting 2.0. Download it or upload it via FTP to your host without leaving the app.',
+      feat_eyebrow: "Features",
+      feat_h2: "The timecode takes center stage.",
+      feat_p: "Everything revolves around time. No decorative microphones, no endless forms: a sharp tool for one thing.",
+      f1_h: "Screenshot OCR",
+      f1_p: "Detects timestamps and titles from any image and turns them into chapters in a couple of seconds.",
+      f2_h: "Editable cards",
+      f2_p: "The big, tabular timecode rules. Edit titles, add links and images per chapter from clear chips.",
+      f3_h: "Live preview",
+      f3_p: 'Watch the <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span> build as you edit. What you see is exactly what you export.',
+      f4_h: "Many podcasts, one destination each",
+      f4_p: "Save each show's details and upload via FTP or SFTP to the right place. Passwords live in the Keychain, not in the app.",
+      f5_h: "Per-chapter images",
+      f5_p: 'Drag in a cover and Argo renames it with the episode slug and uploads it for you. The path lands in the JSON\'s <span style="font-family:var(--mono);font-size:12.5px">img</span> field.',
+      f6_h: "Native, light and dark",
+      f6_p: "Built in SwiftUI. It feels like part of macOS and follows your system's light or dark mode with nothing to configure.",
+      ocr_eyebrow: "The shortcut",
+      ocr_h2: "A screenshot in. Chapters out.",
+      ocr_p: "Already have your chapters written in an image? Skip the typing. Recognition runs entirely on your Mac: nothing is uploaded to the cloud and your notes stay yours.",
+      ocr_cap1: "screenshot · episode notes",
+      ocr_cap2: "recognized · 5 chapters",
+      p20_eyebrow: "The format",
+      p20_h2: "An open standard, not a proprietary format.",
+      p20_l1: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Podcasting 2.0 spec.</b> The same <span style="font-family:var(--mono);font-size:13px">chapters.json</span> modern players understand.</span>',
+      p20_l2: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Per-chapter links and images.</b> Optional <span style="font-family:var(--mono);font-size:13px">url</span> and <span style="font-family:var(--mono);font-size:13px">img</span> fields, ready when you need them.</span>',
+      p20_l3: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Validated on export.</b> If something\'s off, Argo warns you before you upload.</span>',
+      p20_l4: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Import what you already have.</b> An earlier JSON? Open it and keep editing right where you left off.</span>',
+      price_eyebrow: "Pricing",
+      price_h2: "Free. No account, no cloud.",
+      price_p: "Argo is a single-purpose tool made by and for podcasters. Download it and use it.",
+      price_tag: "Argo for macOS",
+      price_free: "Free",
+      price_note: "Direct download · no App Store, no telemetry",
+      price_li1: "Unlimited screenshot OCR",
+      price_li2: "JSON export and import",
+      price_li3: "Built-in FTP / SFTP upload",
+      price_li4: "Native light and dark mode",
+      price_sub: "requires macOS 13 Ventura or later",
+      faq_eyebrow: "Questions",
+      faq_h2: "What you usually want to know.",
+      faq_q1: 'Do I need an internet connection?<span class="pl"></span>',
+      faq_a1: 'Not for the important part. OCR runs entirely on your Mac and editing is local. You only need a connection if you choose to <b>upload</b> the images or JSON via FTP to your host.',
+      faq_q2: 'What image formats does it accept?<span class="pl"></span>',
+      faq_a2: "PNG and JPG, including screenshots. It doesn't matter where the image comes from: episode notes, your audio editor, or a document.",
+      faq_q3: 'Which players does the result work with?<span class="pl"></span>',
+      faq_a3: 'Argo generates a standard Podcasting 2.0 <span class="m">chapters.json</span>, so it works with any player that supports chapters: Castamatic, Podcast Addict, Pocket Casts, Apple Podcasts and more.',
+      faq_q4: 'Can I upload straight to my host?<span class="pl"></span>',
+      faq_a4: 'Yes. Save each podcast\'s connection details and upload the JSON and images via <span class="m">FTP</span> or <span class="m">SFTP</span> without leaving the app. Passwords are stored in the macOS Keychain.',
+      faq_q5: 'Does my data leave my Mac?<span class="pl"></span>',
+      faq_a5: "No. There's no account, no processing cloud, no telemetry. The only thing that leaves is what you choose to upload to your own server.",
+      closer_h2: "Your chapters, ready before you open the editor.",
+      closer_p: 'Download Argo and turn your next episode into a <span style="font-family:var(--mono);font-size:15px">chapters.json</span> in the time it takes the page to load.',
+      foot_tag: 'From episode to <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. A sharp tool for podcasters, built for macOS.',
+      foot_product: "Product",
+      foot_dl: "Download",
+      foot_copy: "© 2026 Argo · v1.0",
+      foot_made: "Made with love for the podcasting community"
+    };
+    const META = {
+      es: {
+        title: "Argo — Del episodio a chapters.json en segundos",
+        desc: "Argo convierte los capítulos de tu podcast en un chapters.json válido de Podcasting 2.0. Escríbelos a mano, importa un JSON o léelos de una captura con OCR. App nativa de macOS para podcasters."
+      },
+      en: {
+        title: "Argo — From episode to chapters.json in seconds",
+        desc: "Argo turns your podcast chapters into a valid Podcasting 2.0 chapters.json. Type them by hand, import a JSON, or read them from a screenshot with OCR. Native macOS app for podcasters."
+      }
+    };
+
+    // cache the ES originals straight from the DOM
+    const i18nEls = document.querySelectorAll('[data-i18n]');
+    const esCache = {};
+    i18nEls.forEach((el) => { const k = el.dataset.i18n; if (esCache[k] === undefined) esCache[k] = el.innerHTML; });
+
+    let dlTotal = null;
+    let currentLang = 'es';
+
+    function setMeta(prop, val, attr) {
+      const m = document.querySelector(`meta[${attr}="${prop}"]`);
+      if (m) m.setAttribute('content', val);
+    }
+
+    function renderDlCount() {
+      const box = document.getElementById('dlcount');
+      const txt = document.getElementById('dlcountText');
+      if (!box || dlTotal === null || dlTotal <= 0) return;
+      const n = dlTotal.toLocaleString(currentLang === 'en' ? 'en-US' : 'es-ES');
+      const word = currentLang === 'en' ? 'downloads' : 'descargas';
+      txt.innerHTML = `<b>${n}</b> ${word}`;
+      box.hidden = false;
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      const en = lang === 'en';
+      i18nEls.forEach((el) => {
+        const k = el.dataset.i18n;
+        const val = en ? I18N[k] : esCache[k];
+        if (val !== undefined) el.innerHTML = val;
+      });
+      document.documentElement.lang = lang;
+      const meta = META[lang] || META.es;
+      document.title = meta.title;
+      setMeta('description', meta.desc, 'name');
+      setMeta('og:title', meta.title, 'property');
+      setMeta('og:description', meta.desc, 'property');
+      setMeta('twitter:title', meta.title, 'name');
+      setMeta('twitter:description', meta.desc, 'name');
+      // toggle button shows the OTHER language
+      const label = document.getElementById('langLabel');
+      if (label) label.textContent = en ? 'ES' : 'EN';
+      try { localStorage.setItem('argo-landing-lang', lang); } catch (e) {}
+      renderDlCount();
+    }
+
+    // initial language: stored override → browser language → ES
+    let initialLang = 'es';
+    try {
+      const stored = localStorage.getItem('argo-landing-lang');
+      if (stored === 'es' || stored === 'en') initialLang = stored;
+      else initialLang = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+    } catch (e) {
+      initialLang = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+    }
+    applyLang(initialLang);
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      applyLang(currentLang === 'en' ? 'es' : 'en');
+    });
+
+    // ════════ Download counter (GitHub Releases API) ════════
+    // ⚠ Debe ser el repo PÚBLICO donde publicas los Releases con Argo.dmg
+    const RELEASES_REPO = 'emilcar74/ChapterEditor';
+    fetch(`https://api.github.com/repos/${RELEASES_REPO}/releases?per_page=100`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((releases) => {
+        let n = 0;
+        (releases || []).forEach((rel) => (rel.assets || []).forEach((a) => {
+          if (/\.dmg$/i.test(a.name)) n += a.download_count || 0;
+        }));
+        dlTotal = n;
+        renderDlCount();
+      })
+      .catch(() => { /* sin red o repo privado: el contador simplemente no aparece */ });
+
+    // Theme toggle (persisted)
+    const themeToggle = document.getElementById('themeToggle');
+    try {
+      if (localStorage.getItem('argo-landing-theme') === 'dark') document.documentElement.classList.add('dark');
+    } catch (e) {}
+    themeToggle.addEventListener('click', () => {
+      const dark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('argo-landing-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    });
+
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
