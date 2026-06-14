@@ -739,7 +739,7 @@
             <li data-i18n="price_li3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subida por FTP / SFTP integrada</li>
             <li data-i18n="price_li4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Modo claro y oscuro nativo</li>
           </ul>
-          <a class="btn primary" href="https://github.com/emilcar74/ChapterEditor/releases/latest/download/Argo.dmg">
+          <a class="btn primary" href="https://github.com/emilcar74/argo-site/releases/latest/download/Argo.dmg">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
             Descargar Argo.dmg
           </a>
@@ -986,7 +986,7 @@
 
     // ════════ Download counter (GitHub Releases API) ════════
     // ⚠ Debe ser el repo PÚBLICO donde publicas los Releases con Argo.dmg
-    const RELEASES_REPO = 'emilcar74/ChapterEditor';
+    const RELEASES_REPO = 'emilcar74/argo-site';
     fetch(`https://api.github.com/repos/${RELEASES_REPO}/releases?per_page=100`)
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((releases) => {
