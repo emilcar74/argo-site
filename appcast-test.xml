@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Argo Updates</title>
+        <link>https://github.com/emilcar74/argo-site</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <!-- Add new versions above this line -->
+        <item>
+            <title>Version 1.1.0</title>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.1.0</h2><ul><li>Actualización todo mal</li></ul>
+            ]]></description>
+            <pubDate>Wed, 17 Jun 2026 23:30:48 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.1.0-test/Argo.dmg"
+                sparkle:edSignature="EU7gXneLaldN8Ho1ticJOyocxOPmQEmGROhkKFFOPjQRIEG7YUZWO4PmLr1yrs6uAjkHOXOawgcM0lpZLh/yDA=="
+                length="3380814"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+    </channel>
+</rss>
