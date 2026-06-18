@@ -405,6 +405,20 @@
   details .ans { padding: 0 4px 22px; font-size: 15px; color: var(--text-2); line-height: 1.6; max-width: 640px; }
   details .ans .m { font-family: var(--mono); color: var(--text); font-size: 13.5px; }
 
+  /* ── Changelog ── */
+  .changelog { margin-top: 52px; max-width: 780px; margin-left: auto; margin-right: auto; }
+  .cl-entry { display: grid; grid-template-columns: 138px 1fr; gap: 30px; padding: 28px 0; border-bottom: 1px solid var(--hairline); }
+  .cl-entry:last-child { border-bottom: 0; padding-bottom: 4px; }
+  .cl-ver { font-family: var(--mono); font-size: 21px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .cl-ver .latest { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; background: var(--accent); padding: 2px 8px; border-radius: 6px; line-height: 1.6; }
+  .cl-date { font-family: var(--mono); font-size: 12px; color: var(--text-3); margin-top: 8px; }
+  .cl-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+  .cl-list li { display: flex; gap: 13px; font-size: 15px; color: var(--text-2); align-items: baseline; line-height: 1.5; text-wrap: pretty; }
+  .cl-tag { flex: 0 0 auto; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 0; border-radius: 6px; width: 66px; text-align: center; }
+  .cl-tag.new { background: var(--accent-weak); color: var(--accent); }
+  .cl-tag.imp { background: rgba(95,122,58,0.14); color: var(--json-str); }
+  .cl-tag.fix { background: rgba(120,90,60,0.12); color: var(--text-2); }
+
   /* ── CTA closer ── */
   .closer { text-align: center; }
   .closer .appicon { width: 76px; height: 76px; margin: 0 auto 26px; }
@@ -418,6 +432,9 @@
   .foot { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
   .foot .brand .appicon { width: 34px; height: 34px; }
   .foot-tag { font-size: 13.5px; color: var(--text-2); margin-top: 14px; max-width: 280px; line-height: 1.55; }
+  .foot-author { font-size: 13.5px; color: var(--text-2); margin-top: 12px; }
+  .foot-author a { color: var(--accent); font-weight: 600; }
+  .foot-author a:hover { text-decoration: underline; }
   .foot-cols { display: flex; gap: 60px; flex-wrap: wrap; }
   .foot-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin: 0 0 14px; font-weight: 600; }
   .foot-col a { display: block; font-size: 14px; color: var(--text-2); padding: 5px 0; transition: color .12s; }
@@ -446,6 +463,7 @@
     .wrap { padding: 0 20px; }
     .hero { padding: 48px 0 40px; }
     .foot-cols { gap: 36px; }
+    .cl-entry { grid-template-columns: 1fr; gap: 14px; padding: 22px 0; }
   }
 </style>
 </head>
@@ -457,13 +475,14 @@
       <a class="brand" href="#top">
         <span class="appicon"><span>01:23</span></span>
         <span class="bname">Argo</span>
-        <span class="bver">v1.0</span>
+        <span class="bver">v1.1.0</span>
       </a>
       <div class="nav-links">
         <a href="#como" data-i18n="nav_how">Cómo funciona</a>
         <a href="#features" data-i18n="nav_feat">Características</a>
         <a href="#formato" data-i18n="nav_p20">Podcasting 2.0</a>
         <a href="#precio" data-i18n="nav_price">Precio</a>
+        <a href="#changelog" data-i18n="nav_changelog">Changelog</a>
       </div>
       <div class="nav-right">
         <button class="icon-btn lang-btn" id="langToggle" title="Language" aria-label="Cambiar idioma"><span id="langLabel">EN</span></button>
@@ -731,7 +750,7 @@
       <div class="price-wrap reveal">
         <div class="price">
           <div class="tag" data-i18n="price_tag">Argo para macOS</div>
-          <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.0</small></div>
+          <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.1.0</small></div>
           <div class="note" data-i18n="price_note">Descarga directa · sin App Store, sin telemetría</div>
           <ul>
             <li data-i18n="price_li1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>OCR de capturas ilimitado</li>
@@ -745,6 +764,41 @@
           </a>
           <div class="dlcount" id="dlcount" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span id="dlcountText"></span></div>
           <div class="sub" data-i18n="price_sub">requiere macOS 13 Ventura o posterior</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ Changelog ════════════════ -->
+  <section class="band" id="changelog" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow" data-i18n="cl_eyebrow">Novedades</span>
+        <h2 data-i18n="cl_h2">Cada versión, al detalle.</h2>
+        <p data-i18n="cl_p">El registro de cambios de Argo: lo nuevo, lo que mejora y lo que se arregla en cada actualización.</p>
+      </div>
+      <div class="changelog reveal">
+        <div class="cl-entry">
+          <div class="cl-meta">
+            <div class="cl-ver">v1.1.0 <span class="latest" data-i18n="cl_latest">Última</span></div>
+            <div class="cl-date" data-i18n="cl_d110">18 de junio de 2026</div>
+          </div>
+          <ul class="cl-list">
+            <li><span class="cl-tag new" data-i18n="cl_new">Nuevo</span><span data-i18n="cl_110_1">Actualizaciones automáticas: Argo ahora se actualiza solo.</span></li>
+            <li><span class="cl-tag imp" data-i18n="cl_imp">Mejora</span><span data-i18n="cl_110_2">Mejoras de accesibilidad con VoiceOver.</span></li>
+            <li><span class="cl-tag imp" data-i18n="cl_imp">Mejora</span><span data-i18n="cl_110_3">La vista previa del JSON ya muestra las URL de las imágenes antes de subirlas.</span></li>
+            <li><span class="cl-tag fix" data-i18n="cl_fix">Arreglo</span><span data-i18n="cl_110_4">Pegar un enlace ya no duplica «https://».</span></li>
+            <li><span class="cl-tag fix" data-i18n="cl_fix">Arreglo</span><span data-i18n="cl_110_5">Arrastrar una imagen a un capítulo ya no activa el OCR por error.</span></li>
+          </ul>
+        </div>
+        <div class="cl-entry">
+          <div class="cl-meta">
+            <div class="cl-ver">v1.0</div>
+            <div class="cl-date" data-i18n="cl_d100">15 de junio de 2026</div>
+          </div>
+          <ul class="cl-list">
+            <li><span class="cl-tag new" data-i18n="cl_new">Nuevo</span><span data-i18n="cl_100_1">Lanzamiento inicial de Argo para macOS.</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -807,6 +861,7 @@
             <span class="bname">Argo</span>
           </a>
           <p class="foot-tag" data-i18n="foot_tag">Del episodio a <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. Una herramienta afilada para podcasters, hecha para macOS.</p>
+          <p class="foot-author" data-i18n="foot_author">Creado por <a href="https://sujetameelmicro.com" target="_blank" rel="noopener">Emilio Cano</a></p>
         </div>
         <div class="foot-cols">
           <div class="foot-col">
@@ -814,12 +869,13 @@
             <a href="#como" data-i18n="nav_how">Cómo funciona</a>
             <a href="#features" data-i18n="nav_feat">Características</a>
             <a href="#formato" data-i18n="nav_p20">Podcasting 2.0</a>
+            <a href="#changelog" data-i18n="nav_changelog">Changelog</a>
             <a href="#precio" data-i18n="foot_dl">Descargar</a>
           </div>
         </div>
       </div>
       <div class="foot-bottom">
-        <span data-i18n="foot_copy">© 2026 Argo · v1.0</span>
+        <span data-i18n="foot_copy">© 2026 Argo · v1.1.0</span>
         <span data-i18n="foot_made">Hecho con amor para la comunidad podcastera</span>
       </div>
     </div>
@@ -832,6 +888,7 @@
       nav_feat: "Features",
       nav_p20: "Podcasting 2.0",
       nav_price: "Pricing",
+      nav_changelog: "Changelog",
       nav_dl: "Download",
       hero_eyebrow: "macOS app · Podcasting 2.0",
       hero_h1: 'From episode to <span class="tc">chapters.json</span><br />in seconds.',
@@ -909,8 +966,24 @@
       foot_tag: 'From episode to <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. A sharp tool for podcasters, built for macOS.',
       foot_product: "Product",
       foot_dl: "Download",
-      foot_copy: "© 2026 Argo · v1.0",
-      foot_made: "Made with love for the podcasting community"
+      foot_copy: "© 2026 Argo · v1.1.0",
+      foot_made: "Made with love for the podcasting community",
+      foot_author: 'Made by <a href="https://sujetameelmicro.com" target="_blank" rel="noopener">Emilio Cano</a>',
+      cl_eyebrow: "What's new",
+      cl_h2: "Every version, in detail.",
+      cl_p: "Argo's changelog: what's new, what improved, and what got fixed in each update.",
+      cl_latest: "Latest",
+      cl_new: "New",
+      cl_imp: "Improved",
+      cl_fix: "Fixed",
+      cl_d110: "June 18, 2026",
+      cl_110_1: "Automatic updates: Argo now updates itself.",
+      cl_110_2: "VoiceOver accessibility improvements.",
+      cl_110_3: "The JSON preview now shows image URLs before you upload them.",
+      cl_110_4: 'Pasting a link no longer duplicates “https://”.',
+      cl_110_5: "Dragging an image onto a chapter no longer triggers OCR by mistake.",
+      cl_d100: "June 15, 2026",
+      cl_100_1: "Initial release of Argo for macOS."
     };
     const META = {
       es: {
