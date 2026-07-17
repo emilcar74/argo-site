@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.2.0</title>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.2.0</h2><ul><li>Los capítulos se pueden marcar como ocultos del índice (toc), útil para metadata silenciosa.</li><li>Nuevo ajuste opcional 'Copia local': guarda una copia del JSON y las imágenes en una carpeta local tras cada subida correcta.</li></ul>
+            ]]></description>
+            <pubDate>Fri, 17 Jul 2026 20:28:52 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.2.0/Argo.dmg"
+                sparkle:edSignature="WxyEx8uuRN1srnSWCBHr20PJ2sySof7hjJju6uYsK3qct29FTJD63RECrDwrN1qJbJKlCM6zZuX3AkmZvADaAQ=="
+                length="3410706"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.1.1</title>
             <sparkle:version>3</sparkle:version>
             <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
