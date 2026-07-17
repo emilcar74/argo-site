@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.2.1</title>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.2.1</h2><ul><li>Corregido un fallo que borraba la configuración de podcasts guardada al actualizar a la 1.2.0 (los datos no se perdían, pero la app dejaba de poder leerlos).</li></ul>
+            ]]></description>
+            <pubDate>Fri, 17 Jul 2026 23:27:49 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.2.1/Argo.dmg"
+                sparkle:edSignature="iRYCnZtm+j5iYv24BonQO4No4eoELPEJWHjcGjsFAN8je01h8OHR26jI17FiBwroPAZH78QogA2qFQpEfqA+Bw=="
+                length="3412849"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.2.0</title>
             <sparkle:version>4</sparkle:version>
             <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
