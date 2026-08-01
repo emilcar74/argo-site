@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.3.0</title>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.3.0</h2><ul><li>Nueva función "Editar desde servidor": corrige un episodio ya publicado sin tener que reconstruirlo desde cero.</li><li>Antes de editar por primera vez, Argo comprueba que el servidor permite sobrescribir archivos de forma segura.</li><li>Subir un JSON ya no pide elegir una carpeta local cuando no hay imágenes nuevas.</li></ul>
+            ]]></description>
+            <pubDate>Sat, 01 Aug 2026 13:34:27 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.3.0/Argo.dmg"
+                sparkle:edSignature="6TFyS4HTpqYS7UuwlEOCImoUCeBjgcyBqTd4puOyDIdfEZarw8/noUJKKdOL5O4NVBTAl/5OIn1hHgYERkLqAg=="
+                length="3526452"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.2.1</title>
             <sparkle:version>5</sparkle:version>
             <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
