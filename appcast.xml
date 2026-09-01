@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.3.5</title>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>1.3.5</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.3.5</h2><ul><li>La interfaz ahora respeta el tamaño de texto configurado en macOS.</li><li>Mejorado el contraste de textos secundarios y terciarios en modo claro y oscuro.</li><li>Pequeños ajustes de legibilidad y accesibilidad visual.</li></ul>
+            ]]></description>
+            <pubDate>Tue, 01 Sep 2026 22:20:20 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.3.5/Argo.dmg"
+                sparkle:edSignature="ofsZoFcw6ic1A4IJOOB5aPLQWYY5TQcl+6CBR2NAjr0SMEgYrJKIZ7IEQSe3X9GAfB29rV2wBt0RNgzv7zfrCQ=="
+                length="3530714"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.3.0</title>
             <sparkle:version>6</sparkle:version>
             <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
