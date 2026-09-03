@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.3.6</title>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>1.3.6</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.3.6</h2><ul><li>Corregido el reordenamiento de capítulos al añadir uno en mitad de la lista.</li><li>Corregida la visualización de imágenes existentes al editar un JSON desde el servidor.</li><li>Las referencias de imágenes remotas se conservan correctamente al guardar.</li></ul>
+            ]]></description>
+            <pubDate>Thu, 03 Sep 2026 09:21:16 +0200</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.3.6/Argo.dmg"
+                sparkle:edSignature="Fql4qn1wPALpjMSU9VUZuvV9FpUnqqmct3p4DA4Hk5GtxZD/tdK0B7WWuL8GM17DEBx+gZXcc34PktCA3/FFDw=="
+                length="3541351"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.3.5</title>
             <sparkle:version>7</sparkle:version>
             <sparkle:shortVersionString>1.3.5</sparkle:shortVersionString>
