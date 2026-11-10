@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.4.0</title>
+            <sparkle:version>9</sparkle:version>
+            <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>What's New in 1.4.0</h2><ul><li>Nueva vista previa de escucha con imágenes, capítulos, enlaces y transcripción sincronizados con el audio.</li><li>Añade un MP3 para comprobar los timestamps: arrástralo a Argo o usa «Abrir con» desde Finder.</li><li>Importación de capítulos, enlaces, imágenes y carátula incrustados en el MP3, conservando los milisegundos y sin modificar el audio original.</li><li>Transcripción opcional en segundo plano mediante el CLI de MacWhisper, con activación automática en Ajustes → General. Requiere MacWhisper y su herramienta de línea de comandos instalados. También puedes importar archivos VTT o SRT.</li><li>Carátula del episodio y miniaturas ampliables a la izquierda de cada capítulo. Puedes arrastrar una imagen para añadir o cambiar la carátula.</li><li>Elige en la confirmación de subida qué archivos publicar: JSON, imágenes, carátula, audio y transcripción. El audio aparece desmarcado inicialmente.</li><li>Previsualizaciones de imágenes al editar un JSON del servidor, incluso cuando el CDN requiere la conexión autenticada del podcast.</li></ul>
+            ]]></description>
+            <pubDate>Tue, 10 Nov 2026 01:02:03 +0100</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.4.0/Argo.dmg"
+                sparkle:edSignature="nkheXOC0/OzZZzFrdT/adb65/utLvxqpiYYDwosvNPHiyYCHt5LYEmu1T9GYVsiIIjlFhb0Wst8iDBzteasYBw=="
+                length="3869607"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.3.6</title>
             <sparkle:version>8</sparkle:version>
             <sparkle:shortVersionString>1.3.6</sparkle:shortVersionString>
