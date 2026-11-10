@@ -2,18 +2,20 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<title>Argo — Del episodio a chapters.json en segundos</title>
+<title>Argo — Prepara los capítulos y los archivos de tu podcast</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Argo convierte los capítulos de tu podcast en un chapters.json válido de Podcasting 2.0. Escríbelos a mano, importa un JSON o léelos de una captura con OCR. App nativa de macOS para podcasters." />
+<meta name="description" content="Importa los capítulos del MP3, previsualiza imágenes y tiempos, transcribe con MacWhisper y sube audio, carátula, transcripción y JSON a tu servidor. App para macOS." />
 <link rel="canonical" href="https://getargo.app/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Argo" />
 <meta property="og:url" content="https://getargo.app/" />
-<meta property="og:title" content="Argo — Del episodio a chapters.json en segundos" />
-<meta property="og:description" content="Escribe los capítulos a mano, importa un JSON o léelos de una captura con OCR. Argo exporta un chapters.json válido de Podcasting 2.0. App nativa de macOS." />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Argo — Del episodio a chapters.json en segundos" />
-<meta name="twitter:description" content="Escribe los capítulos a mano, importa un JSON o léelos de una captura con OCR. Argo exporta un chapters.json válido de Podcasting 2.0. App nativa de macOS." />
+<meta property="og:title" content="Argo — Prepara los capítulos y los archivos de tu podcast" />
+<meta property="og:description" content="Importa los capítulos del MP3, previsualiza imágenes y tiempos, transcribe con MacWhisper y sube audio, carátula, transcripción y JSON a tu servidor. App para macOS." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image" content="https://getargo.app/assets/argo-1.4-preview.png" />
+<meta name="twitter:image" content="https://getargo.app/assets/argo-1.4-preview.png" />
+<meta name="twitter:title" content="Argo — Prepara los capítulos y los archivos de tu podcast" />
+<meta name="twitter:description" content="Importa los capítulos del MP3, previsualiza imágenes y tiempos, transcribe con MacWhisper y sube audio, carátula, transcripción y JSON a tu servidor. App para macOS." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -209,86 +211,12 @@
   }
   .hero-micro .sep { opacity: 0.5; }
 
-  /* ── Hero window mockup ──────────────────────────────── */
-  .stage { position: relative; margin-top: 56px; }
-  .stage::after {
-    content: ""; position: absolute; left: 50%; bottom: -40px; transform: translateX(-50%);
-    width: 78%; height: 80px; background: rgba(80,40,16,0.18); filter: blur(46px); z-index: 0; border-radius: 50%;
-  }
-  .window {
-    position: relative; z-index: 1;
-    width: 100%; max-width: 1000px; margin: 0 auto;
-    background: var(--bg); border-radius: 13px; overflow: hidden;
-    box-shadow: 0 0 0 0.5px rgba(0,0,0,0.18), 0 44px 90px rgba(60,30,12,0.30), 0 14px 34px rgba(60,30,12,0.20);
-    text-align: left;
-  }
-  .w-toolbar {
-    height: 52px; display: flex; align-items: center; gap: 13px; padding: 0 16px;
-    background: var(--bg-2); border-bottom: 0.5px solid var(--hairline);
-  }
-  .traffic { display: flex; gap: 8px; }
-  .light { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
-  .light.r { background: #ec6a5e; } .light.y { background: #f4be4f; } .light.g { background: #61c554; }
-  .w-toolbar .appicon { width: 22px; height: 22px; margin-left: 4px; }
-  .w-toolbar .appicon span { font-size: 6px; }
-  .w-title { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-  .w-title .t { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-  .w-title .t .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-  .w-title .s { font-family: var(--mono); font-size: 10.5px; color: var(--text-3); }
-  .w-pill {
-    margin-left: 6px; height: 28px; padding: 0 10px; border-radius: 8px;
-    border: 0.5px solid var(--hairline); background: rgba(120,90,60,0.06);
-    display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 550;
-  }
-  .w-pill .pdot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
-  .w-tb-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-  .w-chip-json {
-    font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent);
-    background: var(--accent-weak); padding: 5px 10px; border-radius: 7px;
-  }
-  .w-body { display: flex; min-height: 0; }
-  .w-list { flex: 1 1 auto; min-width: 0; padding: 16px 18px 20px; }
-  .w-list .ep-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); font-weight: 600; }
-  .w-list .ep-name { font-size: 21px; font-weight: 640; letter-spacing: -0.02em; margin-top: 4px; }
-  .w-list .ep-hint { font-size: 11px; color: var(--text-3); margin-top: 5px; }
-  .w-list .ep-hint .m { font-family: var(--mono); color: var(--text-2); }
-  .w-list .list-head { display: flex; align-items: baseline; gap: 9px; margin: 18px 0 10px; }
-  .w-list .list-head .h { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); }
-  .w-list .list-head .c { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
-
-  .chapter { display: grid; grid-template-columns: 30px 1fr; }
-  .rail { position: relative; display: flex; justify-content: center; }
-  .rail .line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--rail); opacity: 0.45; }
-  .chapter:first-child .rail .line { top: 22px; }
-  .chapter:last-child .rail .line { bottom: calc(100% - 22px); }
-  .rail .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2.5px solid var(--rail-dot); margin-top: 17px; z-index: 2; box-shadow: 0 0 0 4px var(--bg); }
-  .ccard {
-    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px;
-    padding: 11px 13px; margin-bottom: 9px; box-shadow: 0 1px 2px rgba(40,24,10,0.04);
-  }
-  .ccard.editing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak), 0 4px 14px rgba(192,85,47,0.10); }
-  .ccard-top { display: flex; align-items: center; gap: 13px; }
-  .timecode { font-family: var(--mono); font-size: 21px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum" 1; line-height: 1; flex: 0 0 auto; }
-  .timecode .dim { color: var(--text-3); }
-  .ccard.editing .timecode { background: var(--accent-weak); color: var(--accent); padding: 3px 5px; border-radius: 5px; box-shadow: inset 0 0 0 1.5px var(--accent-weak-2); }
-  .ccard.editing .timecode .dim { color: var(--accent); opacity: 0.5; }
-  .ctitle { font-size: 14.5px; font-weight: 550; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .chips { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
-  .chip { display: inline-flex; align-items: center; gap: 5px; height: 23px; padding: 0 9px 0 7px; border-radius: 12px; font-size: 11px; font-weight: 500; }
-  .chip svg { width: 12px; height: 12px; }
-  .chip .v { font-family: var(--mono); font-size: 10.5px; }
-  .chip.filled { background: var(--accent-weak); color: var(--accent); }
-  .chip.filled.img { background: rgba(95,122,58,0.13); color: var(--json-str); }
-  .chip.ghost { background: transparent; color: var(--text-3); border: 1px dashed var(--card-border-strong); }
-  .chip.ghost.type { border-style: solid; }
-  .caret { display: inline-block; width: 2px; height: 18px; background: var(--accent); margin-left: 1px; vertical-align: -3px; animation: blink 1.1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .w-json { flex: 0 0 312px; background: var(--json-bg); border-left: 0.5px solid var(--hairline); display: flex; flex-direction: column; }
-  .w-json .jh { display: flex; align-items: center; gap: 8px; padding: 13px 15px; border-bottom: 0.5px solid var(--hairline); }
-  .w-json .jh .jt { font-family: var(--mono); font-size: 11px; color: var(--text-2); }
-  .w-json .jh .jb { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-weak); padding: 2px 7px; border-radius: 5px; }
-  .w-json .jbody { padding: 14px 15px; font-family: var(--mono); font-size: 11px; line-height: 1.7; white-space: pre; overflow: hidden; }
+  /* ── Actual app screenshot ── */
+  .app-shot { position: relative; margin: 40px auto 0; max-width: 1120px; }
+  .app-shot a { display: block; border-radius: 16px; }
+  .app-shot a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+  .app-shot img { display: block; width: 100%; height: auto; filter: drop-shadow(0 22px 28px rgba(60,30,12,0.16)); }
+  .app-shot figcaption { margin-top: 6px; font-size: 13px; color: var(--text-2); }
   .jk { color: var(--json-key); } .js { color: var(--json-str); } .jn { color: var(--json-num); } .jp { color: var(--json-punc); }
 
   /* ════════ Compat strip ════════ */
@@ -332,30 +260,26 @@
   .feat p { margin: 8px 0 0; font-size: 14px; color: var(--text-2); line-height: 1.55; }
   .feat.wide { grid-column: span 2; }
 
-  /* ── Dark OCR band ── */
-  .ocr-band { background: linear-gradient(155deg, var(--deep-1) 0%, var(--deep-2) 100%); color: #f3e6da; position: relative; overflow: hidden; }
-  .ocr-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 80% 0%, rgba(192,85,47,0.22) 0%, transparent 55%); }
-  .ocr-grid { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; margin-top: 48px; }
-  .ocr-band .eyebrow { color: #e8a47e; }
-  .ocr-band .eyebrow::before { background: #e8a47e; }
-  .ocr-band h2 { color: #fbf1e8; }
-  .ocr-band .sec-head p { color: rgba(243,230,218,0.72); }
-  .shot {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,220,190,0.14); border-radius: 12px;
-    padding: 16px; box-shadow: 0 18px 40px rgba(0,0,0,0.30);
-  }
-  .shot .cap { font-family: var(--mono); font-size: 10.5px; color: rgba(243,230,218,0.5); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px; }
-  .shot.screenshot { background: repeating-linear-gradient(135deg, rgba(255,255,255,0.045) 0 11px, rgba(255,255,255,0.02) 11px 22px), rgba(0,0,0,0.18); }
-  .ocr-line { display: flex; gap: 12px; align-items: baseline; padding: 7px 4px; border-bottom: 1px dashed rgba(255,220,190,0.12); font-family: var(--mono); font-size: 13px; }
-  .ocr-line:last-child { border-bottom: 0; }
-  .ocr-line .t { color: #e8a47e; font-weight: 600; }
-  .ocr-line .x { color: rgba(243,230,218,0.82); font-family: var(--sans); font-size: 13.5px; }
-  .recog .ocr-line { border-bottom-style: solid; border-bottom-color: rgba(255,220,190,0.1); }
-  .recog .ocr-line .badge { margin-left: auto; color: #9fc36e; }
-  .recog .ocr-line .badge svg { width: 14px; height: 14px; }
-  .ocr-arrow { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #e8a47e; }
-  .ocr-arrow svg { width: 30px; height: 30px; }
-  .ocr-arrow span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(243,230,218,0.55); }
+  /* ── Complete episode workflow ── */
+  .source-note { margin-top: 24px; padding: 20px 24px; border: 1px solid var(--card-border); border-radius: 12px; color: var(--text-2); font-size: 14.5px; }
+  .source-note strong { color: var(--text); }
+  .publish-band { background: linear-gradient(155deg, var(--deep-1), var(--deep-2)); color: #f3e6da; }
+  .publish-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .publish-band .eyebrow { color: #e8a47e; }
+  .publish-band .eyebrow::before { background: #e8a47e; }
+  .publish-band h2 { color: #fbf1e8; }
+  .publish-band .sec-head p { color: #e1cbbc; }
+  .transcribe-note { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(255,220,190,.18); }
+  .transcribe-note h3 { margin: 0 0 8px; font-size: 18px; }
+  .transcribe-note p { margin: 0; font-size: 14.5px; line-height: 1.6; color: #e1cbbc; }
+  .delivery { border: 1px solid rgba(255,220,190,.18); background: rgba(255,255,255,.05); border-radius: 16px; padding: 28px; }
+  .delivery h3 { margin: 0 0 22px; font-size: 20px; line-height: 1.3; font-weight: 600; }
+  .delivery ul { list-style: none; margin: 0; padding: 0; }
+  .delivery li { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid rgba(255,220,190,.14); }
+  .file-ext { display: flex; align-items: center; justify-content: center; flex: 0 0 48px; height: 42px; border-radius: 9px; background: rgba(232,164,126,.13); color: #f4b88f; font: 600 11px var(--mono); }
+  .delivery li code { display: block; color: #fbf1e8; font: 12px var(--mono); overflow-wrap: anywhere; }
+  .delivery li span[data-i18n] { display: block; margin-top: 4px; color: #e1cbbc; font-size: 13px; }
+  .delivery-note { margin: 18px 0 0; color: #e1cbbc; font-size: 13px; line-height: 1.6; }
 
   /* ── Podcasting 2.0 / JSON ── */
   .p20 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 12px; }
@@ -449,19 +373,22 @@
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .nav-links { display: none; }
-    .w-json { display: none; }
     .steps, .features { grid-template-columns: 1fr; }
     .steprail { display: none; }
     .feat.wide { grid-column: span 1; }
     .p20 { grid-template-columns: 1fr; gap: 32px; }
-    .ocr-grid { grid-template-columns: 1fr; }
-    .ocr-arrow { flex-direction: row; }
-    .ocr-arrow svg { transform: rotate(90deg); }
+    .publish-grid { grid-template-columns: 1fr; gap: 32px; }
     section.band { padding: 64px 0; }
   }
   @media (max-width: 560px) {
     .wrap { padding: 0 20px; }
+    .brand .bver { display: none; }
+    nav .brand { gap: 9px; }
+    .nav-in { gap: 8px; }
+    .nav-right { gap: 4px; }
+    .nav-right .btn.sm { padding: 0 10px; font-size: 13px; gap: 6px; }
     .hero { padding: 48px 0 40px; }
+    .delivery { padding: 22px; }
     .foot-cols { gap: 36px; }
     .cl-entry { grid-template-columns: 1fr; gap: 14px; padding: 22px 0; }
   }
@@ -503,8 +430,8 @@
   <header class="hero">
     <div class="wrap hero-in">
       <span class="eyebrow" data-i18n="hero_eyebrow">App para macOS · Podcasting 2.0</span>
-      <h1 data-i18n="hero_h1">Del episodio a <span class="tc">chapters.json</span><br />en segundos.</h1>
-      <p class="hero-sub" data-i18n="hero_sub"><b>Escríbelos a mano</b>, <b>importa un JSON</b> que ya tengas o deja que el <b>OCR</b> lea una captura. Argo los convierte en capítulos editables y exporta un JSON válido.</p>
+      <h1 data-i18n="hero_h1">Del MP3 al episodio<br /><span class="tc">listo para publicar.</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Recupera los <b>capítulos incrustados en tu MP3</b>, revisa cómo se verá y escuchará el episodio y transcríbelo con MacWhisper. Sube <b>audio, carátula, transcripción, JSON e imágenes</b> a tu servidor desde una misma app.</p>
       <div class="hero-cta">
         <a class="btn primary" href="#precio">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
@@ -519,69 +446,15 @@
         <span>Gratis</span><span class="sep">·</span><span>macOS 13+</span><span class="sep">·</span><span>Apple Silicon &amp; Intel</span><span class="sep">·</span><span>Sin cuenta de Argo</span>
       </div>
 
-      <!-- App window mockup -->
-      <div class="stage reveal">
-        <div class="window">
-          <div class="w-toolbar">
-            <div class="traffic"><span class="light r"></span><span class="light y"></span><span class="light g"></span></div>
-            <span class="appicon"><span>01:23</span></span>
-            <div class="w-title"><span class="t"><span class="dot"></span>WKL367</span><span class="s">chapters · v1.0</span></div>
-            <span class="w-pill"><span class="pdot"></span>Weekly
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-            <div class="w-tb-right"><span class="w-chip-json">{ } JSON</span></div>
-          </div>
-          <div class="w-body">
-            <div class="w-list">
-              <div class="ep-eyebrow" data-i18n="mock_ep">Episodio</div>
-              <div class="ep-name">WKL367</div>
-              <div class="ep-hint" data-i18n="mock_ephint">Se usará para nombrar las imágenes al subirlas · <span class="m">WKL367-2.jpeg</span></div>
-              <div class="list-head"><span class="h" data-i18n="mock_chlabel">Capítulos</span><span class="c" data-i18n="mock_chcount">5 · 50:27 marcados</span></div>
-
-              <div class="chapter">
-                <div class="rail"><span class="line"></span><span class="dot"></span></div>
-                <div class="ccard">
-                  <div class="ccard-top"><span class="timecode">00:<span class="dim">00:00</span></span><span class="ctitle">Presentación</span></div>
-                  <div class="chips"><span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span><span class="chip ghost" data-i18n="chip_img">Imagen</span></div>
-                </div>
-              </div>
-
-              <div class="chapter">
-                <div class="rail"><span class="line"></span><span class="dot"></span></div>
-                <div class="ccard editing">
-                  <div class="ccard-top"><span class="timecode">00:00:21</span><span class="ctitle">Mi Steam Deck<span class="caret"></span></span></div>
-                  <div class="chips">
-                    <span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span>
-                    <span class="chip filled img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><span class="v">WKL367-1.jpeg</span></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="chapter">
-                <div class="rail"><span class="line"></span><span class="dot"></span></div>
-                <div class="ccard">
-                  <div class="ccard-top"><span class="timecode">00:18:35</span><span class="ctitle">Apple Store Covent Garden</span></div>
-                  <div class="chips"><span class="chip filled img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><span class="v">WKL367-2.jpeg</span></span><span class="chip ghost type" data-i18n="chip_link">Añadir enlace</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="w-json">
-              <div class="jh"><span class="jt">chapters.json</span><span class="jb">Podcasting 2.0</span></div>
-              <div class="jbody"><span class="jp">{</span>
-  <span class="jk">"version"</span><span class="jp">:</span> <span class="js">"1.0"</span><span class="jp">,</span>
-  <span class="jk">"chapters"</span><span class="jp">:</span> <span class="jp">[</span>
-    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">0</span><span class="jp">,</span> <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Presentación"</span> <span class="jp">},</span>
-    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">21</span><span class="jp">,</span>
-      <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Mi Steam Deck"</span><span class="jp">,</span>
-      <span class="jk">"img"</span><span class="jp">:</span> <span class="js">"…/WKL367-1.jpeg"</span> <span class="jp">},</span>
-    <span class="jp">{</span> <span class="jk">"startTime"</span><span class="jp">:</span> <span class="jn">1115</span><span class="jp">,</span> <span class="jk">"title"</span><span class="jp">:</span> <span class="js">"Apple Store Covent…"</span> <span class="jp">}</span>
-  <span class="jp">]</span>
-<span class="jp">}</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <figure class="app-shot reveal">
+        <a href="assets/argo-1.4-preview.png" target="_blank" rel="noopener">
+          <img src="assets/argo-1.4-preview.png" width="1232" height="801" fetchpriority="high"
+               alt="Argo 1.4 con la carátula de SEM381p, sus capítulos e imágenes y la simulación de escucha a la derecha"
+               data-alt-es="Argo 1.4 con la carátula de SEM381p, sus capítulos e imágenes y la simulación de escucha a la derecha"
+               data-alt-en="Argo 1.4 showing SEM381p artwork, chapters and images, with the listening preview on the right" />
+        </a>
+        <figcaption data-i18n="screenshot_caption">Argo 1.4 en acción. Abre la captura para verla en detalle.</figcaption>
+      </figure>
     </div>
   </header>
 
@@ -602,28 +475,28 @@
     <div class="wrap">
       <div class="sec-head center reveal">
         <span class="eyebrow" data-i18n="how_eyebrow">Cómo funciona</span>
-        <h2 data-i18n="how_h2">Tres pasos, del primer capítulo al JSON.</h2>
-        <p data-i18n="how_p">Trae los capítulos como quieras —a mano, importando un JSON o con una captura— y Argo se encarga de montar el formato.</p>
+        <h2 data-i18n="how_h2">Importa. Revisa. Publica.</h2>
+        <p data-i18n="how_p">Empieza por el audio del episodio y prepara todo lo que lo acompaña, sin ir saltando entre herramientas.</p>
       </div>
       <div class="steps reveal">
         <div class="steprail"></div>
         <div class="step">
-          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V6a2 2 0 0 1 2-2h2"/><path d="M17 4h2a2 2 0 0 1 2 2v2"/><path d="M21 16v2a2 2 0 0 1-2 2h-2"/><path d="M7 20H5a2 2 0 0 1-2-2v-2"/><path d="M7 10.5h6"/><path d="M7 13.5h10"/></svg></div>
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
           <div class="k">01</div>
-          <h3 data-i18n="step1_h">Trae tus capítulos</h3>
-          <p data-i18n="step1_p">Escríbelos a mano, importa un <span style="font-family:var(--mono);font-size:13px">chapters.json</span> que ya tengas o arrastra una captura y deja que el OCR la lea.</p>
+          <h3 data-i18n="step1_h">Abre el MP3</h3>
+          <p data-i18n="step1_p">Arrástralo a Argo o usa «Abrir con» desde Finder. Si ya contiene capítulos, Argo recupera sus tiempos, títulos, enlaces, imágenes y carátula. Si no, puedes crearlos tú.</p>
         </div>
         <div class="step">
-          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></div>
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 8 5 4-5 4Z"/></svg></div>
           <div class="k">02</div>
-          <h3 data-i18n="step2_h">Revisa y edita</h3>
-          <p data-i18n="step2_p">Cada capítulo es una tarjeta editable: ajusta el timecode y el título, reordénalos y añade enlaces o imágenes donde quieras.</p>
+          <h3 data-i18n="step2_h">Escucha y comprueba</h3>
+          <p data-i18n="step2_p">Ajusta los tiempos mientras escuchas el audio. Revisa las imágenes y los enlaces en una simulación de escucha como la de una app de podcasts.</p>
         </div>
         <div class="step">
-          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/></svg></div>
+          <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg></div>
           <div class="k">03</div>
-          <h3 data-i18n="step3_h">Exporta el JSON</h3>
-          <p data-i18n="step3_p">Un <span style="font-family:var(--mono);font-size:13px">chapters.json</span> limpio y validado para Podcasting 2.0. Descárgalo o súbelo por FTP a tu hosting sin salir de la app.</p>
+          <h3 data-i18n="step3_h">Sube todo lo que necesites</h3>
+          <p data-i18n="step3_p">Elige qué archivos enviar al servidor: MP3, carátula, transcripción, JSON e imágenes de los capítulos. También puedes exportar solo el JSON.</p>
         </div>
       </div>
     </div>
@@ -634,73 +507,67 @@
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow" data-i18n="feat_eyebrow">Características</span>
-        <h2 data-i18n="feat_h2">El timecode es el protagonista.</h2>
-        <p data-i18n="feat_p">Todo gira en torno al tiempo. Sin micrófonos de adorno, sin formularios infinitos: una herramienta afilada para una sola cosa.</p>
+        <h2 data-i18n="feat_h2">Todo lo que acompaña a tu episodio.</h2>
+        <p data-i18n="feat_p">Desde los capítulos que ya lleva el MP3 hasta la última imagen que verá quien lo escuche.</p>
       </div>
       <div class="features reveal">
         <div class="feat">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></div>
-          <h3 data-i18n="f1_h">OCR de capturas</h3>
-          <p data-i18n="f1_p">Detecta timestamps y títulos de cualquier imagen y los convierte en capítulos en un par de segundos.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+          <h3 data-i18n="f1_h">Capítulos desde el MP3</h3>
+          <p data-i18n="f1_p">Recupera los capítulos incrustados con sus enlaces e imágenes. Conserva los milisegundos y edita lo que necesites sin modificar el audio original.</p>
         </div>
         <div class="feat">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></div>
-          <h3 data-i18n="f2_h">Tarjetas editables</h3>
-          <p data-i18n="f2_p">El timecode, grande y tabular, manda. Edita títulos, añade enlaces e imágenes por capítulo desde chips claros.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 8 5 4-5 4Z"/></svg></div>
+          <h3 data-i18n="f2_h">Una vista previa de verdad</h3>
+          <p data-i18n="f2_p">Escucha, salta entre capítulos y comprueba qué imagen y enlace aparecen en cada momento. Detecta una imagen equivocada antes de publicar.</p>
         </div>
         <div class="feat">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/></svg></div>
-          <h3 data-i18n="f3_h">Vista previa en vivo</h3>
-          <p data-i18n="f3_p">Ve el <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span> construirse mientras editas. Lo que ves es exactamente lo que exportas.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h12M4 14h16M4 18h10"/></svg></div>
+          <h3 data-i18n="f3_h">Transcripción con MacWhisper</h3>
+          <p data-i18n="f3_p">Transcribe en segundo plano mientras preparas los capítulos. Requiere MacWhisper y su CLI instalados. También admite importar VTT y SRT.</p>
         </div>
         <div class="feat">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg></div>
-          <h3 data-i18n="f4_h">Varios podcasts, un destino cada uno</h3>
-          <p data-i18n="f4_p">Guarda los datos de cada programa y sube por FTP o SFTP al sitio correcto. Las contraseñas viven en el Llavero, no en la app.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg></div>
+          <h3 data-i18n="f4_h">Todos los archivos, una subida</h3>
+          <p data-i18n="f4_p">Audio, carátula, transcripción, capítulos e imágenes: marca cada archivo que quieras enviar. Tú decides qué llega al servidor.</p>
         </div>
         <div class="feat">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
-          <h3 data-i18n="f5_h">Imágenes por capítulo</h3>
-          <p data-i18n="f5_p">Arrastra una portada y Argo la renombra con el slug del episodio y la sube por ti. La ruta acaba en el campo <span style="font-family:var(--mono);font-size:12.5px">img</span> del JSON.</p>
+          <h3 data-i18n="f5_h">Carátula e imágenes a la vista</h3>
+          <p data-i18n="f5_p">Arrastra la carátula y las imágenes de los capítulos. Las miniaturas se pueden ampliar para comprobarlas; Argo se encarga de nombrar los archivos al subirlos.</p>
         </div>
         <div class="feat">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
-          <h3 data-i18n="f6_h">Nativa, clara y oscura</h3>
-          <p data-i18n="f6_p">Hecha en SwiftUI. Se siente como parte de macOS y sigue el modo claro u oscuro de tu sistema sin que tengas que tocar nada.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01"/></svg></div>
+          <h3 data-i18n="f6_h">Cada podcast, su servidor</h3>
+          <p data-i18n="f6_p">Guarda un destino FTP o SFTP por programa. Abre un JSON del servidor para corregir un episodio existente sin reconstruir sus capítulos desde cero.</p>
         </div>
       </div>
+      <p class="source-note reveal" data-i18n="other_sources"><strong>También puedes empezar de otras formas.</strong> Crea los capítulos a mano, importa un JSON local o del servidor, o deja que el OCR lea una captura con tiempos y títulos.</p>
     </div>
   </section>
 
-  <!-- ════════════════ OCR band ════════════════ -->
-  <section class="band ocr-band">
-    <div class="wrap">
-      <div class="sec-head reveal" style="max-width:560px">
-        <span class="eyebrow" data-i18n="ocr_eyebrow">El atajo</span>
-        <h2 data-i18n="ocr_h2">Una captura entra. Capítulos salen.</h2>
-        <p data-i18n="ocr_p">¿Ya tienes los capítulos escritos en una imagen? Sáltate el tecleo. El reconocimiento corre entero en tu Mac: nada se sube a la nube y tus notas son tuyas.</p>
+  <!-- ════════════════ Complete episode ════════════════ -->
+  <section class="band publish-band" id="episodio">
+    <div class="wrap publish-grid">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="publish_eyebrow">Más que un JSON</span>
+        <h2 data-i18n="publish_h2">El episodio completo, en tu servidor.</h2>
+        <p data-i18n="publish_p">Audio, carátula, transcripción, capítulos e imágenes: reúne todos los archivos del episodio y elige cuáles subir. Cada podcast conserva su propio destino FTP o SFTP.</p>
+        <div class="transcribe-note">
+          <h3 data-i18n="transcribe_h">Transcribe mientras editas.</h3>
+          <p data-i18n="transcribe_p">Con MacWhisper y su CLI instalados, Argo puede iniciar la transcripción al abrir el MP3. Mientras avanza, tú preparas los capítulos. Actívalo en Ajustes → General o importa un VTT o SRT que ya tengas.</p>
+        </div>
       </div>
-      <div class="ocr-grid reveal">
-        <div class="shot screenshot">
-          <div class="cap" data-i18n="ocr_cap1">captura · notas del episodio</div>
-          <div class="ocr-line"><span class="t">0:00</span><span class="x">Presentación</span></div>
-          <div class="ocr-line"><span class="t">0:21</span><span class="x">Mi Steam Deck</span></div>
-          <div class="ocr-line"><span class="t">18:35</span><span class="x">Apple Store Covent Garden</span></div>
-          <div class="ocr-line"><span class="t">36:05</span><span class="x">SIM en el Palma 2 Pro</span></div>
-          <div class="ocr-line"><span class="t">50:27</span><span class="x">Despedida</span></div>
-        </div>
-        <div class="ocr-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          <span>OCR</span>
-        </div>
-        <div class="shot recog">
-          <div class="cap" data-i18n="ocr_cap2">reconocido · 5 capítulos</div>
-          <div class="ocr-line"><span class="t">00:00:00</span><span class="x">Presentación</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-          <div class="ocr-line"><span class="t">00:00:21</span><span class="x">Mi Steam Deck</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-          <div class="ocr-line"><span class="t">00:18:35</span><span class="x">Apple Store Covent Garden</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-          <div class="ocr-line"><span class="t">00:36:05</span><span class="x">SIM en el Palma 2 Pro</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-          <div class="ocr-line"><span class="t">00:50:27</span><span class="x">Despedida</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-        </div>
+      <div class="delivery reveal">
+        <h3 data-i18n="delivery_h">Una subida. Solo lo que marques.</h3>
+        <ul>
+          <li><span class="file-ext" aria-hidden="true">MP3</span><div><code>SEM381p.mp3</code><span data-i18n="asset_audio">Audio del episodio</span></div></li>
+          <li><span class="file-ext" aria-hidden="true">JPG</span><div><code>SEM381p.jpg</code><span data-i18n="asset_cover">Carátula del episodio</span></div></li>
+          <li><span class="file-ext" aria-hidden="true">VTT</span><div><code>SEM381p.vtt</code><span data-i18n="asset_transcript">Transcripción</span></div></li>
+          <li><span class="file-ext" aria-hidden="true">JSON</span><div><code>SEM381p.json</code><span data-i18n="asset_chapters">Capítulos de Podcasting 2.0</span></div></li>
+          <li><span class="file-ext" aria-hidden="true">JPG</span><div><code>SEM381p-02.jpg</code><span data-i18n="asset_images">Imágenes de los capítulos</span></div></li>
+        </ul>
+        <p class="delivery-note" data-i18n="delivery_note">Marca o desmarca cada archivo antes de confirmar. El MP3 no se sube si no lo eliges.</p>
       </div>
     </div>
   </section>
@@ -744,8 +611,8 @@
     <div class="wrap">
       <div class="sec-head center reveal">
         <span class="eyebrow" data-i18n="price_eyebrow">Precio</span>
-        <h2 data-i18n="price_h2">Gratis. Sin cuenta, sin nube.</h2>
-        <p data-i18n="price_p">Argo es una herramienta de un solo propósito hecha por y para podcasters. Descárgala y úsala.</p>
+        <h2 data-i18n="price_h2">Gratis. En tu Mac, a tu ritmo.</h2>
+        <p data-i18n="price_p">Una app nativa de macOS para preparar los capítulos y los archivos de tu podcast. Sin cuenta de Argo ni suscripción a Argo.</p>
       </div>
       <div class="price-wrap reveal">
         <div class="price">
@@ -753,10 +620,10 @@
           <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.4.0</small></div>
           <div class="note" data-i18n="price_note">Descarga directa · sin App Store, sin telemetría</div>
           <ul>
-            <li data-i18n="price_li1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>OCR de capturas ilimitado</li>
-            <li data-i18n="price_li2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Exportación e importación de JSON</li>
-            <li data-i18n="price_li3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subida por FTP / SFTP integrada</li>
-            <li data-i18n="price_li4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Modo claro y oscuro nativo</li>
+            <li data-i18n="price_li1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Capítulos del MP3 y vista previa</li>
+            <li data-i18n="price_li2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Transcripción opcional con MacWhisper</li>
+            <li data-i18n="price_li3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subida completa por FTP / SFTP</li>
+            <li data-i18n="price_li4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>JSON, edición manual y OCR</li>
           </ul>
           <a class="btn primary" href="https://github.com/emilcar74/argo-site/releases/latest/download/Argo.dmg">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
@@ -891,23 +758,27 @@
       <div class="faq reveal">
         <details open>
           <summary data-i18n="faq_q1">¿Necesito conexión a internet?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a1">No para lo importante. El OCR corre entero en tu Mac y la edición es local. Solo necesitas red si decides <b>subir</b> las imágenes o el JSON por FTP a tu hosting.</div>
+          <div class="ans" data-i18n="faq_a1">La edición, la lectura de capítulos del MP3, la escucha y el OCR funcionan en tu Mac. Necesitas conexión para acceder al servidor. La transcripción depende del modelo local o servicio que tengas configurado en MacWhisper.</div>
         </details>
         <details>
-          <summary data-i18n="faq_q2">¿Qué formatos de imagen acepta?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a2">PNG y JPG, incluidas capturas de pantalla. Da igual de dónde venga la imagen: notas del episodio, tu editor de audio o un documento.</div>
+          <summary data-i18n="faq_q2">¿Y si el MP3 no lleva capítulos?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a2">Puedes crearlos a mano, importar un JSON local o del servidor, o usar OCR para leer una captura con los tiempos y títulos. Adjunta el MP3 para comprobar los tiempos escuchándolo.</div>
         </details>
         <details>
-          <summary data-i18n="faq_q3">¿Con qué reproductores funciona el resultado?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a3">Argo genera un <span class="m">chapters.json</span> estándar de Podcasting 2.0, así que funciona con cualquier reproductor que soporte capítulos: Castamatic, Podcast Addict, Pocket Casts, Apple Podcasts y más.</div>
+          <summary data-i18n="faq_q3">¿Argo modifica el feed del podcast?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a3">No. Argo prepara y sube los archivos a tu servidor. La incorporación de sus URLs al feed se gestiona en tu hosting o herramienta de publicación. Los capítulos se exportan en JSON de Podcasting 2.0.</div>
         </details>
         <details>
           <summary data-i18n="faq_q4">¿Puedo subir directamente a mi hosting?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a4">Sí. Guarda los datos de conexión de cada podcast y sube el JSON y las imágenes por <span class="m">FTP</span> o <span class="m">SFTP</span> sin salir de la app. Las contraseñas se guardan en el Llavero de macOS.</div>
+          <div class="ans" data-i18n="faq_a4">Sí. Configura el destino de cada podcast por FTP o SFTP y elige los archivos que quieres subir: MP3, carátula, transcripción, JSON e imágenes. Las contraseñas se guardan en el Llavero de macOS.</div>
         </details>
         <details>
           <summary data-i18n="faq_q5">¿Mis datos salen de mi Mac?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a5">No. No hay cuenta, ni nube de procesamiento, ni telemetría. Lo único que sale es lo que tú decides subir a tu propio servidor.</div>
+          <div class="ans" data-i18n="faq_a5">Argo no tiene cuenta ni telemetría. Editas y previsualizas en tu Mac, y eliges qué archivos subir a tu servidor. Si usas la transcripción, el tratamiento del audio depende del modelo o servicio que tengas elegido en MacWhisper.</div>
+        </details>
+        <details>
+          <summary data-i18n="faq_q6">¿Qué necesito para transcribir?<span class="pl"></span></summary>
+          <div class="ans" data-i18n="faq_a6">MacWhisper y su herramienta de línea de comandos (CLI) instalados. Argo utiliza el modelo que tengas configurado en MacWhisper. Puedes activar la transcripción al abrir un MP3 en Ajustes → General, o importar un VTT o SRT generado con otra herramienta.</div>
         </details>
       </div>
     </div>
@@ -917,8 +788,8 @@
   <section class="band" style="background:var(--bg-2);padding-bottom:96px">
     <div class="wrap closer reveal">
       <span class="appicon"><span>01:23</span></span>
-      <h2 data-i18n="closer_h2">Tus capítulos, listos antes de que abras el editor.</h2>
-      <p data-i18n="closer_p">Descarga Argo y convierte tu próximo episodio en un <span style="font-family:var(--mono);font-size:15px">chapters.json</span> en lo que tarda en cargar la página.</p>
+      <h2 data-i18n="closer_h2">Tu próximo episodio, con todo a punto.</h2>
+      <p data-i18n="closer_p">Abre el MP3, prepara sus capítulos, revisa las imágenes y reúne los archivos para publicarlo. Todo desde Argo, en tu Mac.</p>
       <div class="hero-cta">
         <a class="btn primary" href="#precio">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
@@ -937,7 +808,7 @@
             <span class="appicon"><span>01:23</span></span>
             <span class="bname">Argo</span>
           </a>
-          <p class="foot-tag" data-i18n="foot_tag">Del episodio a <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. Una herramienta afilada para podcasters, hecha para macOS.</p>
+          <p class="foot-tag" data-i18n="foot_tag">Capítulos, audio, imágenes y transcripción. Prepara tu episodio en una app hecha para macOS.</p>
           <p class="foot-author" data-i18n="foot_author">Creado por <a href="https://sujetameelmicro.com" target="_blank" rel="noopener">Emilio Cano</a></p>
         </div>
         <div class="foot-cols">
@@ -961,6 +832,22 @@
   <script>
     // ════════ i18n (ES default, EN fallback) ════════
     const I18N = {
+      screenshot_caption: "Argo 1.4 in action. Open the screenshot for a closer look.",
+      other_sources: "<strong>Other starting points are welcome too.</strong> Create chapters by hand, import a local or server JSON, or let OCR read a screenshot of timestamps and titles.",
+      publish_eyebrow: "More than a JSON",
+      publish_h2: "The complete episode, on your server.",
+      publish_p: "Audio, cover, transcript, chapters and images: gather your episode files and choose which ones to upload. Each podcast keeps its own FTP or SFTP destination.",
+      transcribe_h: "Transcribe while you edit.",
+      transcribe_p: "With MacWhisper and its CLI installed, Argo can start transcription when you open an MP3. Prepare your chapters while it runs. Enable it in Settings → General, or import an existing VTT or SRT.",
+      delivery_h: "One upload. Only the files you select.",
+      asset_audio: "Episode audio",
+      asset_cover: "Episode cover",
+      asset_transcript: "Transcript",
+      asset_chapters: "Podcasting 2.0 chapters",
+      asset_images: "Chapter images",
+      delivery_note: "Check or uncheck each file before confirming. The MP3 is only uploaded if you select it.",
+      faq_q6: "What do I need for transcription?<span class=\"pl\"></span>",
+      faq_a6: "MacWhisper and its command-line tool (CLI) must be installed. Argo uses the model configured in MacWhisper. Enable transcription when opening an MP3 in Settings → General, or import a VTT or SRT created with another tool.",
       nav_how: "How it works",
       nav_feat: "Features",
       nav_p20: "Podcasting 2.0",
@@ -968,47 +855,36 @@
       nav_changelog: "Changelog",
       nav_dl: "Download",
       hero_eyebrow: "macOS app · Podcasting 2.0",
-      hero_h1: 'From episode to <span class="tc">chapters.json</span><br />in seconds.',
-      hero_sub: '<b>Type them by hand</b>, <b>import a JSON</b> you already have, or let <b>OCR</b> read a screenshot. Argo turns them into editable chapters and exports a valid JSON.',
+      hero_h1: "From MP3 to an episode<br /><span class=\"tc\">ready to publish.</span>",
+      hero_sub: "Import <b>chapters embedded in your MP3</b>, preview how the episode will look and sound, and transcribe it with MacWhisper. Upload <b>audio, cover, transcript, JSON and images</b> to your server from one app.",
       hero_dl: "Download for macOS",
       hero_see: "See how it works",
       hero_micro: '<span>Free</span><span class="sep">·</span><span>macOS 13+</span><span class="sep">·</span><span>Apple Silicon &amp; Intel</span><span class="sep">·</span><span>No Argo account</span>',
-      mock_ep: "Episode",
-      mock_ephint: 'Used to name images when uploading · <span class="m">WKL367-2.jpeg</span>',
-      mock_chlabel: "Chapters",
-      mock_chcount: "5 · 50:27 marked",
-      chip_link: "Add link",
-      chip_img: "Image",
       strip_lbl: "The JSON works in any Podcasting 2.0 player",
       how_eyebrow: "How it works",
-      how_h2: "Three steps, from the first chapter to JSON.",
-      how_p: "Bring your chapters however you like —by hand, importing a JSON, or from a screenshot— and Argo assembles the format.",
-      step1_h: "Bring your chapters",
-      step1_p: 'Type them by hand, import a <span style="font-family:var(--mono);font-size:13px">chapters.json</span> you already have, or drag in a screenshot and let OCR read it.',
-      step2_h: "Review and edit",
-      step2_p: "Each chapter is an editable card: tweak the timecode and title, reorder them, and add links or images wherever you want.",
-      step3_h: "Export the JSON",
-      step3_p: 'A clean, validated <span style="font-family:var(--mono);font-size:13px">chapters.json</span> for Podcasting 2.0. Download it or upload it via FTP to your host without leaving the app.',
+      how_h2: "Import. Review. Publish.",
+      how_p: "Start with your episode audio and prepare everything that goes with it in one place.",
+      step1_h: "Open your MP3",
+      step1_p: "Drag it into Argo or choose “Open With” in Finder. If it contains chapters, Argo reads their times, titles, links, images and cover. Otherwise, create your own.",
+      step2_h: "Listen and check",
+      step2_p: "Adjust timestamps while listening. Check images and links in a listening preview inspired by a podcast app.",
+      step3_h: "Upload everything you need",
+      step3_p: "Choose which files to send to your server: MP3, cover, transcript, JSON and chapter images. You can also export just the JSON.",
       feat_eyebrow: "Features",
-      feat_h2: "The timecode takes center stage.",
-      feat_p: "Everything revolves around time. No decorative microphones, no endless forms: a sharp tool for one thing.",
-      f1_h: "Screenshot OCR",
-      f1_p: "Detects timestamps and titles from any image and turns them into chapters in a couple of seconds.",
-      f2_h: "Editable cards",
-      f2_p: "The big, tabular timecode rules. Edit titles, add links and images per chapter from clear chips.",
-      f3_h: "Live preview",
-      f3_p: 'Watch the <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span> build as you edit. What you see is exactly what you export.',
-      f4_h: "Many podcasts, one destination each",
-      f4_p: "Save each show's details and upload via FTP or SFTP to the right place. Passwords live in the Keychain, not in the app.",
-      f5_h: "Per-chapter images",
-      f5_p: 'Drag in a cover and Argo renames it with the episode slug and uploads it for you. The path lands in the JSON\'s <span style="font-family:var(--mono);font-size:12.5px">img</span> field.',
-      f6_h: "Native, light and dark",
-      f6_p: "Built in SwiftUI. It feels like part of macOS and follows your system's light or dark mode with nothing to configure.",
-      ocr_eyebrow: "The shortcut",
-      ocr_h2: "A screenshot in. Chapters out.",
-      ocr_p: "Already have your chapters written in an image? Skip the typing. Recognition runs entirely on your Mac: nothing is uploaded to the cloud and your notes stay yours.",
-      ocr_cap1: "screenshot · episode notes",
-      ocr_cap2: "recognized · 5 chapters",
+      feat_h2: "Everything that goes with your episode.",
+      feat_p: "From the chapters already inside your MP3 to the last image your listeners will see.",
+      f1_h: "Chapters from your MP3",
+      f1_p: "Read embedded chapters with their links and images. Preserve millisecond timing and edit what you need without modifying the original audio.",
+      f2_h: "See and hear the result",
+      f2_p: "Listen, jump between chapters and check which image and link appear at each moment. Catch the wrong artwork before publishing.",
+      f3_h: "Transcription with MacWhisper",
+      f3_p: "Transcribe in the background while you prepare chapters. Requires MacWhisper and its CLI to be installed. VTT and SRT imports are supported too.",
+      f4_h: "All your files, one upload",
+      f4_p: "Audio, cover, transcript, chapters and images: select each file you want to send. You decide what reaches your server.",
+      f5_h: "Artwork you can actually see",
+      f5_p: "Drag in episode and chapter artwork. Enlarge thumbnails to check them; Argo handles filenames when you upload.",
+      f6_h: "Each podcast, its own server",
+      f6_p: "Save an FTP or SFTP destination for each show. Open a server JSON to fix an existing episode without rebuilding its chapters from scratch.",
       p20_eyebrow: "The format",
       p20_h2: "An open standard, not a proprietary format.",
       p20_l1: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Podcasting 2.0 spec.</b> The same <span style="font-family:var(--mono);font-size:13px">chapters.json</span> modern players understand.</span>',
@@ -1016,31 +892,31 @@
       p20_l3: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Validated on export.</b> If something\'s off, Argo warns you before you upload.</span>',
       p20_l4: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Import what you already have.</b> An earlier JSON? Open it and keep editing right where you left off.</span>',
       price_eyebrow: "Pricing",
-      price_h2: "Free. No account, no cloud.",
-      price_p: "Argo is a single-purpose tool made by and for podcasters. Download it and use it.",
+      price_h2: "Free. On your Mac, at your pace.",
+      price_p: "A native macOS app for preparing your podcast chapters and files. No Argo account or Argo subscription.",
       price_tag: "Argo for macOS",
       price_free: "Free",
       price_note: "Direct download · no App Store, no telemetry",
-      price_li1: "Unlimited screenshot OCR",
-      price_li2: "JSON export and import",
-      price_li3: "Built-in FTP / SFTP upload",
-      price_li4: "Native light and dark mode",
+      price_li1: "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>MP3 chapters and listening preview",
+      price_li2: "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Optional MacWhisper transcription",
+      price_li3: "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Complete FTP / SFTP uploads",
+      price_li4: "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>JSON, manual editing and OCR",
       price_sub: "requires macOS 13 Ventura or later",
       faq_eyebrow: "Questions",
       faq_h2: "What you usually want to know.",
       faq_q1: 'Do I need an internet connection?<span class="pl"></span>',
-      faq_a1: 'Not for the important part. OCR runs entirely on your Mac and editing is local. You only need a connection if you choose to <b>upload</b> the images or JSON via FTP to your host.',
-      faq_q2: 'What image formats does it accept?<span class="pl"></span>',
-      faq_a2: "PNG and JPG, including screenshots. It doesn't matter where the image comes from: episode notes, your audio editor, or a document.",
-      faq_q3: 'Which players does the result work with?<span class="pl"></span>',
-      faq_a3: 'Argo generates a standard Podcasting 2.0 <span class="m">chapters.json</span>, so it works with any player that supports chapters: Castamatic, Podcast Addict, Pocket Casts, Apple Podcasts and more.',
+      faq_a1: "Editing, reading MP3 chapters, listening and OCR run on your Mac. A connection is needed to access your server. Transcription depends on the local model or service configured in MacWhisper.",
+      faq_q2: "What if my MP3 has no chapters?<span class=\"pl\"></span>",
+      faq_a2: "Create chapters by hand, import a local or server JSON, or use OCR to read timestamps and titles from a screenshot. Attach your MP3 to check timing while listening.",
+      faq_q3: "Does Argo modify my podcast feed?<span class=\"pl\"></span>",
+      faq_a3: "No. Argo prepares and uploads files to your server. Adding their URLs to the feed is handled by your hosting or publishing tool. Chapters are exported as Podcasting 2.0 JSON.",
       faq_q4: 'Can I upload straight to my host?<span class="pl"></span>',
-      faq_a4: 'Yes. Save each podcast\'s connection details and upload the JSON and images via <span class="m">FTP</span> or <span class="m">SFTP</span> without leaving the app. Passwords are stored in the macOS Keychain.',
+      faq_a4: "Yes. Configure each podcast’s FTP or SFTP destination and choose the files to upload: MP3, cover, transcript, JSON and images. Passwords are stored in the macOS Keychain.",
       faq_q5: 'Does my data leave my Mac?<span class="pl"></span>',
-      faq_a5: "No. There's no account, no processing cloud, no telemetry. The only thing that leaves is what you choose to upload to your own server.",
-      closer_h2: "Your chapters, ready before you open the editor.",
-      closer_p: 'Download Argo and turn your next episode into a <span style="font-family:var(--mono);font-size:15px">chapters.json</span> in the time it takes the page to load.',
-      foot_tag: 'From episode to <span style="font-family:var(--mono);font-size:12.5px">chapters.json</span>. A sharp tool for podcasters, built for macOS.',
+      faq_a5: "Argo has no account or telemetry. Edit and preview on your Mac, then choose which files to upload to your server. When transcribing, audio processing depends on the model or service selected in MacWhisper.",
+      closer_h2: "Your next episode, ready to go.",
+      closer_p: "Open the MP3, prepare its chapters, check the artwork and gather the files for publishing. All from Argo, on your Mac.",
+      foot_tag: "Chapters, audio, artwork and transcripts. Prepare your episode in an app built for macOS.",
       foot_product: "Product",
       foot_dl: "Download",
       foot_copy: "© 2026 Argo · v1.4.0",
@@ -1091,15 +967,15 @@
       cl_100_1: "Initial release of Argo for macOS."
     };
     const META = {
-      es: {
-        title: "Argo — Del episodio a chapters.json en segundos",
-        desc: "Argo convierte los capítulos de tu podcast en un chapters.json válido de Podcasting 2.0. Escríbelos a mano, importa un JSON o léelos de una captura con OCR. App nativa de macOS para podcasters."
+      "es": {
+            "title": "Argo — Prepara los capítulos y los archivos de tu podcast",
+            "desc": "Importa los capítulos del MP3, previsualiza imágenes y tiempos, transcribe con MacWhisper y sube audio, carátula, transcripción y JSON a tu servidor. App para macOS."
       },
-      en: {
-        title: "Argo — From episode to chapters.json in seconds",
-        desc: "Argo turns your podcast chapters into a valid Podcasting 2.0 chapters.json. Type them by hand, import a JSON, or read them from a screenshot with OCR. Native macOS app for podcasters."
+      "en": {
+            "title": "Argo — Prepare your podcast chapters and episode files",
+            "desc": "Import chapters from your MP3, preview artwork and timing, transcribe with MacWhisper and upload audio, cover, transcript and JSON to your server. A macOS app."
       }
-    };
+};
 
     // cache the ES originals straight from the DOM
     const i18nEls = document.querySelectorAll('[data-i18n]');
@@ -1132,6 +1008,7 @@
         const val = en ? I18N[k] : esCache[k];
         if (val !== undefined) el.innerHTML = val;
       });
+      document.querySelectorAll('img[data-alt-en]').forEach((img) => { img.alt = en ? img.dataset.altEn : img.dataset.altEs; });
       document.documentElement.lang = lang;
       const meta = META[lang] || META.es;
       document.title = meta.title;
