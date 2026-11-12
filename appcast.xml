@@ -7,6 +7,22 @@
         <language>en</language>
         <!-- Add new versions above this line -->
         <item>
+            <title>Version 1.4.1</title>
+            <sparkle:version>10</sparkle:version>
+            <sparkle:shortVersionString>1.4.1</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h2>Novedades de 1.4.1</h2><ul><li>Incrusta en una copia del MP3 los capítulos creados en Argo cuando el original no los incluye, sin recodificar el audio ni modificar el original.</li><li>Sube el MP3 con capítulos al servidor junto al JSON o expórtalo por separado.</li></ul>
+            ]]></description>
+            <pubDate>Fri, 13 Nov 2026 00:08:17 +0100</pubDate>
+            <enclosure
+                url="https://github.com/emilcar74/argo-site/releases/download/v1.4.1/Argo.dmg"
+                sparkle:edSignature="zk+XP/h8aP8Tv+3klUiOyGGyaarKjK2ITo424nI+0oRm8ZXaRQAUimPzEwAcGu3QYDiyl4XqZdNREK4D39guCQ=="
+                length="3951273"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
             <title>Version 1.4.0</title>
             <sparkle:version>9</sparkle:version>
             <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>

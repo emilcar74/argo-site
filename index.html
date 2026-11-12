@@ -402,7 +402,7 @@
       <a class="brand" href="#top">
         <span class="appicon"><span>01:23</span></span>
         <span class="bname">Argo</span>
-        <span class="bver">v1.4.0</span>
+        <span class="bver">v1.4.1</span>
       </a>
       <div class="nav-links">
         <a href="#como" data-i18n="nav_how">Cómo funciona</a>
@@ -431,7 +431,7 @@
     <div class="wrap hero-in">
       <span class="eyebrow" data-i18n="hero_eyebrow">App para macOS · Podcasting 2.0</span>
       <h1 data-i18n="hero_h1">Del MP3 al episodio<br /><span class="tc">listo para publicar.</span></h1>
-      <p class="hero-sub" data-i18n="hero_sub">Recupera los <b>capítulos incrustados en tu MP3</b>, revisa cómo se verá y escuchará el episodio y transcríbelo con MacWhisper. Sube <b>audio, carátula, transcripción, JSON e imágenes</b> a tu servidor desde una misma app.</p>
+      <p class="hero-sub" data-i18n="hero_sub">Importa o crea los <b>capítulos de tu MP3</b> y, si no los lleva, incrústalos sin recodificar el audio. Revisa el episodio y transcríbelo con MacWhisper. Sube <b>audio, carátula, transcripción, JSON e imágenes</b> a tu servidor desde una misma app.</p>
       <div class="hero-cta">
         <a class="btn primary" href="#precio">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
@@ -496,7 +496,7 @@
           <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg></div>
           <div class="k">03</div>
           <h3 data-i18n="step3_h">Sube todo lo que necesites</h3>
-          <p data-i18n="step3_p">Elige qué archivos enviar al servidor: MP3, carátula, transcripción, JSON e imágenes de los capítulos. También puedes exportar solo el JSON.</p>
+          <p data-i18n="step3_p">Elige qué archivos enviar al servidor. Si tu MP3 no lleva capítulos, puedes incrustarlos y subir esa nueva copia sin recodificar el audio. También puedes exportar el MP3 o el JSON.</p>
         </div>
       </div>
     </div>
@@ -617,7 +617,7 @@
       <div class="price-wrap reveal">
         <div class="price">
           <div class="tag" data-i18n="price_tag">Argo para macOS</div>
-          <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.4.0</small></div>
+          <div class="amt"><span data-i18n="price_free">Gratis</span><small> · v1.4.1</small></div>
           <div class="note" data-i18n="price_note">Descarga directa · sin App Store, sin telemetría</div>
           <ul>
             <li data-i18n="price_li1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Capítulos del MP3 y vista previa</li>
@@ -647,7 +647,16 @@
       <div class="changelog reveal">
         <div class="cl-entry">
           <div class="cl-meta">
-            <div class="cl-ver">v1.4.0 <span class="latest" data-i18n="cl_latest">Última</span></div>
+            <div class="cl-ver">v1.4.1 <span class="latest" data-i18n="cl_latest">Última</span></div>
+            <div class="cl-date" data-i18n="cl_d141">13 de noviembre de 2026</div>
+          </div>
+          <ul class="cl-list">
+            <li><span class="cl-tag new" data-i18n="cl_new">Nuevo</span><span data-i18n="cl_141_1">Incrusta los capítulos creados en Argo en una copia del MP3 y súbela al servidor o expórtala, sin recodificar el audio ni modificar el original.</span></li>
+          </ul>
+        </div>
+        <div class="cl-entry">
+          <div class="cl-meta">
+            <div class="cl-ver">v1.4.0</div>
             <div class="cl-date" data-i18n="cl_d140">10 de noviembre de 2026</div>
           </div>
           <ul class="cl-list">
@@ -762,7 +771,7 @@
         </details>
         <details>
           <summary data-i18n="faq_q2">¿Y si el MP3 no lleva capítulos?<span class="pl"></span></summary>
-          <div class="ans" data-i18n="faq_a2">Puedes crearlos a mano, importar un JSON local o del servidor, o usar OCR para leer una captura con los tiempos y títulos. Adjunta el MP3 para comprobar los tiempos escuchándolo.</div>
+          <div class="ans" data-i18n="faq_a2">Puedes crearlos a mano, importar un JSON o usar OCR. Después puedes incrustarlos en una copia del MP3 y subirla al servidor o exportarla, sin recodificar el audio ni modificar el original.</div>
         </details>
         <details>
           <summary data-i18n="faq_q3">¿Argo modifica el feed del podcast?<span class="pl"></span></summary>
@@ -823,7 +832,7 @@
         </div>
       </div>
       <div class="foot-bottom">
-        <span data-i18n="foot_copy">© 2026 Argo · v1.4.0</span>
+        <span data-i18n="foot_copy">© 2026 Argo · v1.4.1</span>
         <span data-i18n="foot_made">Hecho con amor para la comunidad podcastera</span>
       </div>
     </div>
@@ -856,7 +865,7 @@
       nav_dl: "Download",
       hero_eyebrow: "macOS app · Podcasting 2.0",
       hero_h1: "From MP3 to an episode<br /><span class=\"tc\">ready to publish.</span>",
-      hero_sub: "Import <b>chapters embedded in your MP3</b>, preview how the episode will look and sound, and transcribe it with MacWhisper. Upload <b>audio, cover, transcript, JSON and images</b> to your server from one app.",
+      hero_sub: "Import or create <b>MP3 chapters</b> and, if your file has none, embed them without re-encoding the audio. Preview the episode and transcribe it with MacWhisper. Upload <b>audio, cover, transcript, JSON and images</b> to your server from one app.",
       hero_dl: "Download for macOS",
       hero_see: "See how it works",
       hero_micro: '<span>Free</span><span class="sep">·</span><span>macOS 13+</span><span class="sep">·</span><span>Apple Silicon &amp; Intel</span><span class="sep">·</span><span>No Argo account</span>',
@@ -869,7 +878,7 @@
       step2_h: "Listen and check",
       step2_p: "Adjust timestamps while listening. Check images and links in a listening preview inspired by a podcast app.",
       step3_h: "Upload everything you need",
-      step3_p: "Choose which files to send to your server: MP3, cover, transcript, JSON and chapter images. You can also export just the JSON.",
+      step3_p: "Choose which files to send to your server. If your MP3 has no chapters, embed them and upload the new copy without re-encoding the audio. You can also export the MP3 or JSON.",
       feat_eyebrow: "Features",
       feat_h2: "Everything that goes with your episode.",
       feat_p: "From the chapters already inside your MP3 to the last image your listeners will see.",
@@ -907,7 +916,7 @@
       faq_q1: 'Do I need an internet connection?<span class="pl"></span>',
       faq_a1: "Editing, reading MP3 chapters, listening and OCR run on your Mac. A connection is needed to access your server. Transcription depends on the local model or service configured in MacWhisper.",
       faq_q2: "What if my MP3 has no chapters?<span class=\"pl\"></span>",
-      faq_a2: "Create chapters by hand, import a local or server JSON, or use OCR to read timestamps and titles from a screenshot. Attach your MP3 to check timing while listening.",
+      faq_a2: "Create chapters by hand, import a JSON file or use OCR. Then embed them in a copy of the MP3 and upload or export it, without re-encoding the audio or changing the original.",
       faq_q3: "Does Argo modify my podcast feed?<span class=\"pl\"></span>",
       faq_a3: "No. Argo prepares and uploads files to your server. Adding their URLs to the feed is handled by your hosting or publishing tool. Chapters are exported as Podcasting 2.0 JSON.",
       faq_q4: 'Can I upload straight to my host?<span class="pl"></span>',
@@ -919,7 +928,7 @@
       foot_tag: "Chapters, audio, artwork and transcripts. Prepare your episode in an app built for macOS.",
       foot_product: "Product",
       foot_dl: "Download",
-      foot_copy: "© 2026 Argo · v1.4.0",
+      foot_copy: "© 2026 Argo · v1.4.1",
       foot_made: "Made with love for the podcasting community",
       foot_author: 'Made by <a href="https://sujetameelmicro.com" target="_blank" rel="noopener">Emilio Cano</a>',
       cl_eyebrow: "What's new",
@@ -929,6 +938,8 @@
       cl_new: "New",
       cl_imp: "Improved",
       cl_fix: "Fixed",
+      cl_d141: "November 13, 2026",
+      cl_141_1: "Embed chapters created in Argo in a copy of your MP3, then upload or export it without re-encoding the audio or changing the original.",
       cl_d140: "November 10, 2026",
       cl_140_1: "Listening preview with artwork, chapters, links and a transcript synchronized with your MP3.",
       cl_140_2: "Open an MP3 from Finder or drag it into Argo. Import its embedded chapters, images and cover without modifying the audio.",
